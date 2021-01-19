@@ -17,6 +17,11 @@ class Admin extends User
      */
     private $id;
 
+    public function __construct()
+    {
+         $this->setRoles(['admin']);
+    }
+
     public function getId(): ?int
     {
         return $this->id;

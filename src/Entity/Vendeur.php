@@ -22,6 +22,11 @@ class Vendeur extends User
      */
     private $siret;
 
+    public function __construct()
+    {
+         $this->setRoles(['vendeur']);
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -22,4 +22,13 @@ class AccueilController extends AbstractController
             'controller_name' => 'AccueilController',
         ]);
     }
+
+    /**
+     * @Route("/succes", name="succes")
+     */
+    public function succes(): Response
+    {
+        return $this->render('accueil/succes.html.twig', [
+        ]);
+    }
 }
