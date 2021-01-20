@@ -62,9 +62,4 @@ class Client extends User
         return $this;
     }
 
-    public function getConnexions(): Collection
-    {
-        return $this->connexions;
-    }
-
 }

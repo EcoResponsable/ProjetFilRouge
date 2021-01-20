@@ -18,15 +18,14 @@ class ClientFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
+            ->add('email', null,[
+                'attr' => [
+                     'class' => 'form-control'
                 ],
-            ])
+                'label_attr' => [
+                    'class' => 'form-label'
+                ]
+                ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -45,6 +44,14 @@ class ClientFormType extends AbstractType
             ])
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'You should agree to our terms.',
+                    ]),
+                ],
+            ])
         ;
     }
 

@@ -53,10 +53,11 @@ class AccueilController extends AbstractController
         $user = $this->getUser();
         $connexion->setUser($user);
         $date = new \DateTime();
+        $date->modify('+ 1 hour');
         $connexion->setDateConnexion($date);
         $em->persist($connexion);
         $em->flush();
-        
+
         return $this->render('accueil/succes.html.twig', [
         ]);
     }
