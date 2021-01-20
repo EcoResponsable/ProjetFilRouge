@@ -46,9 +46,11 @@ class RegistrationController extends AbstractController
                 'main' // firewall name in security.yaml
             );
         }
+        $url = $request->getPathInfo();
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'url' => $url
         ]);
     }
 
@@ -82,9 +84,11 @@ class RegistrationController extends AbstractController
                 'main' // firewall name in security.yaml
             );
         }
+        $url = $request->getPathInfo();
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'url' => $url
         ]);
     }
 }
