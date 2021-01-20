@@ -10,17 +10,18 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Admin extends User
 {
+
+    public function __construct()
+    {
+        $this->setRoles(['ROLE_ADMIN']);
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
-
-    public function __construct()
-    {
-         $this->setRoles(['admin']);
-    }
+    protected $id;
 
     public function getId(): ?int
     {

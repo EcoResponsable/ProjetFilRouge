@@ -4,44 +4,60 @@ namespace App\Entity;
 
 use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class Client extends User
 {
+
+    public function __construct()
+    {
+        $this->setRoles(['ROLE_CLIENT']);
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $paiement = [];
+    private $nom;
 
-    public function __construct()
-    {
-         $this->setRoles(['client']);
-    }
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $prenom;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPaiement(): ?array
+    public function getNom(): ?string
     {
-        return $this->paiement;
+        return $this->nom;
     }
 
-    public function setPaiement(?array $paiement): self
+    public function setNom(string $nom): self
     {
-        $this->paiement = $paiement;
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
 
         return $this;
     }

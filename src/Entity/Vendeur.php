@@ -10,22 +10,23 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Vendeur extends User
 {
+
+    public function __construct()
+    {
+        $this->setRoles(['ROLE_VENDEUR']);
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="integer")
      */
     private $siret;
-
-    public function __construct()
-    {
-         $this->setRoles(['vendeur']);
-    }
 
     public function getId(): ?int
     {

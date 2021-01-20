@@ -15,9 +15,18 @@ class AccueilController extends AbstractController
      */
     public function index(EntityManagerInterface $em): Response
     {
-        $client = new Client();
-        $client->setRoles(['client']);
-        dump($client);
+        // $client = new Client();
+        // $client
+        // ->setEmail('mehdi.agounine@gmail.com')
+        // ->setPassword('mathys')
+        // ->setNom('Agounine')
+        // ->setPrenom('Mehdi');
+
+        // $em->persist($client);
+        // $em->flush();
+
+
+
         return $this->render('accueil/index.html.twig', [
             'controller_name' => 'AccueilController',
         ]);
