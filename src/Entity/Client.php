@@ -15,7 +15,7 @@ class Client extends User
     {
         $this->setRoles(['ROLE_CLIENT']);
     }
-
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -61,4 +61,10 @@ class Client extends User
 
         return $this;
     }
+
+    public function getConnexions(): Collection
+    {
+        return $this->connexions;
+    }
+
 }

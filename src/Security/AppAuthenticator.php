@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\Connexion;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -95,9 +96,17 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
+        $connexion = new Connexion();
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        $user = $this->getUser();
+        $connexion->setUser($user);
+        $date = new \DateTime();
+        $connexion->setDateConnexion($date);
+        $em->persist($connexion);
+        $em->flush();
+
+        return new RedirectResponse($this->urlGenerator->generate('succes'));
+        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl()

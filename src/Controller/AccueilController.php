@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\Connexion;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,18 +16,28 @@ class AccueilController extends AbstractController
      */
     public function index(EntityManagerInterface $em): Response
     {
-        // $client = new Client();
-        // $client
-        // ->setEmail('mehdi.agounine@gmail.com')
-        // ->setPassword('mathys')
-        // ->setNom('Agounine')
-        // ->setPrenom('Mehdi');
 
-        // $em->persist($client);
-        // $em->flush();
+        $connexion = new Connexion();
+        return $this->render('accueil/index.html.twig', [
+            'controller_name' => 'AccueilController',
+        ]);
+    }
 
+    /**
+     * @Route("/client", name="accueilclient")
+     */
+    public function indexclient(EntityManagerInterface $em): Response
+    {
+        return $this->render('accueil/index.html.twig', [
+            'controller_name' => 'AccueilController',
+        ]);
+    }
 
-
+    /**
+     * @Route("/vendeur", name="accueilvendeur")
+     */
+    public function indexvendeur(EntityManagerInterface $em): Response
+    {
         return $this->render('accueil/index.html.twig', [
             'controller_name' => 'AccueilController',
         ]);
@@ -35,8 +46,17 @@ class AccueilController extends AbstractController
     /**
      * @Route("/succes", name="succes")
      */
-    public function succes(): Response
+    public function succes(EntityManagerInterface $em): Response
     {
+        $connexion = new Connexion();
+
+        $user = $this->getUser();
+        $connexion->setUser($user);
+        $date = new \DateTime();
+        $connexion->setDateConnexion($date);
+        $em->persist($connexion);
+        $em->flush();
+        
         return $this->render('accueil/succes.html.twig', [
         ]);
     }

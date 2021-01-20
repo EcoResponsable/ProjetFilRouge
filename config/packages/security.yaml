@@ -55,3 +55,8 @@ security:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/client, roles: ROLE_CLIENT }
          - { path: ^/vendeur, roles: ROLE_VENDEUR }
+    
+
+    role_hierarchy:
+        ROLE_VENDEUR: ROLE_CLIENT
+        ROLE_ADMIN: ROLE_VENDEUR
