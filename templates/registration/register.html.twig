@@ -7,10 +7,10 @@
     <ul class="nav nav-tabs">        
         <li class="nav-item">
             
-          <a class="nav-link {{url == '/registerClient' ? 'active'}}" href="{{ path('clientRegister')}}">Client</a>
+          <a class="nav-link {{type == 'client' ? 'active'}}" href="{{ path('register',{'type':'client'})}}">Client</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{url == '/registerVendeur' ? 'active'}}" href="{{ path('vendeurRegister')}}">Vendeur</a>
+          <a class="nav-link {{type == 'vendeur' ? 'active'}}" href="{{ path('register',{'type':'vendeur'})}}">Vendeur</a>
         </li>
       </ul>
 </div>
@@ -22,12 +22,20 @@
     <h1>Inscription</h1>
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+        {{ form_row(registrationForm.email, {
+          label_attr: {
+             class: 'form-label'
+            }
+          }) }}
+        {{ form_row(registrationForm.password, {
+            label: 'Mot de passe',
+            label_attr: {
+              class: 'form-label'
+            }
         }) }}
         
-        {{ form_rest(registrationForm)}}        
+        {{ form_rest(registrationForm)}}
+        <br>       
         <button type="submit" class="btn btn-dark">S'inscrire</button>
     {{ form_end(registrationForm) }}
 </div>

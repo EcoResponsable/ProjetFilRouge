@@ -24,7 +24,7 @@ class Vendeur extends User
     protected $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="bigint")
      */
     private $siret;
 

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Mon compte{% endblock %}
 
 {% block body %}
 
@@ -9,8 +9,13 @@
     <h1>Mes informations</h1>
 
     {{ form_start(form) }}
-        
-        {{ form_rest(form)}}        
+
+    {{ form_row(form.email) }}
+    
+    {{ form_row(form.password) }}
+    
+    {{ form_rest(form)}} 
+        <br>       
         <button type="submit" class="btn btn-dark">Modifier mes informations</button>
     {{ form_end(form) }}
 </div>

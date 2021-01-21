@@ -17,12 +17,17 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/registerClient", name="clientRegister")
+     * @Route("/inscription/{type?client}", name="register")
      */
-    public function registerClient(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthenticator $authenticator): Response
+    public function registerClient(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthenticator $authenticator,$type): Response
     {
-        $user = new Client();
-        $form = $this->createForm(ClientFormType::class, $user);
+        if($type == 'client'){
+            $user = new Client();
+            $form = $this->createForm(ClientFormType::class, $user);
+        }elseif($type == 'vendeur'){
+            $user = new Vendeur();
+            $form = $this->createForm(VendeurFormType::class, $user);
+        }
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -30,7 +35,7 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
 
@@ -46,49 +51,10 @@ class RegistrationController extends AbstractController
                 'main' // firewall name in security.yaml
             );
         }
-        $url = $request->getPathInfo();
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
-            'url' => $url
-        ]);
-    }
-
-    /**
-     * @Route("/registerVendeur", name="vendeurRegister")
-     */
-    public function registerVendeur(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthenticator $authenticator): Response
-    {
-        $user = new Vendeur();
-        $form = $this->createForm(VendeurFormType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
-
-            return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $authenticator,
-                'main' // firewall name in security.yaml
-            );
-        }
-        $url = $request->getPathInfo();
-
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-            'url' => $url
+            'type' => $type
         ]);
     }
 }
