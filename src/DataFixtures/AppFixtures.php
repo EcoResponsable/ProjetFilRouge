@@ -7,7 +7,6 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    // bonjour test mehdi
     public function load(ObjectManager $manager)
     {
         // $product = new Product();
