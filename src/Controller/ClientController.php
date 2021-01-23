@@ -13,6 +13,7 @@ class ClientController extends AbstractController
      */
     public function index(): Response
     {
+        // kiniha pue du cul
         return $this->render('client/index.html.twig', [
             'controller_name' => 'ClientController',
         ]);
