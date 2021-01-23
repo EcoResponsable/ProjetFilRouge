@@ -32,6 +32,7 @@ class Connexion
         return $this->id;
     }
 
+    // commentaire test
     public function getDateConnexion(): ?\DateTimeInterface
     {
         return $this->dateConnexion;
