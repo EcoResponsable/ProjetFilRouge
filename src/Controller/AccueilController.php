@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Entity\Connexion;
+use App\Entity\Vendeur;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,6 @@ class AccueilController extends AbstractController
     public function index(EntityManagerInterface $em): Response
     {
 
-        $connexion = new Connexion();
         return $this->render('accueil/index.html.twig', [
             'controller_name' => 'AccueilController',
         ]);

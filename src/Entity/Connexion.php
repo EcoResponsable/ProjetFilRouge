@@ -25,7 +25,7 @@ class Connexion
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="connexions")
      */
-    private $user;
+    protected $user;
 
     public function getId(): ?int
     {

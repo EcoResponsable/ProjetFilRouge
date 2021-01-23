@@ -40,6 +40,16 @@ abstract class User implements UserInterface
      */
     protected $password;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Connexion::class, mappedBy="user")
+     */
+    protected $connexions;
+
+    public function __construct()
+    {
+        $this->connexions = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -97,6 +107,38 @@ abstract class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection|Connexion[]
+     */
+    public function getConnexions(): Collection
+    {
+        return $this->connexions;
+    }
+
+
+    public function addConnexions(Connexion $connexion): self
+    {
+        if (!$this->connexions->contains($connexion)) {
+            $this->connexions[] = $connexion;
+            $connexion->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConnexions(Connexion $connexion): self
+    {
+        if ($this->connexions->removeElement($connexion)) {
+            // set the owning side to null (unless already changed)
+            if ($connexion->getUser() === $this) {
+                $connexion->setUser(null);
+            }
+        }
 
         return $this;
     }
