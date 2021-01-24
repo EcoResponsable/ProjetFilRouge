@@ -34,18 +34,12 @@ class UserController extends AbstractController
                 $form = $this->createForm(ClientFormType::class, $user);
                 break;
         }
-
-
-        
-        
-
+      
         $form->handleRequest($req);
 
 
 
             if($form->isSubmitted() && $form->isValid()){
-
-                dump($user);
                                 
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
@@ -62,7 +56,22 @@ class UserController extends AbstractController
 
         return $this->render('user/index.html.twig', [
             'form' => $form->createView()
+            
         ]);
 
     }
+
+      /**
+         * @Route("/infoUser{id}", name="infoUser")
+         */
+        public function infoUser($id, AdminRepository $repAdmin, ClientRepository $repClient, VendeurRepository $repVendeur)
+        {
+
+            $user = $this->getUser();
+            $roles = $user->getRoles();
+            dump($roles);
+        return $this->render('User/infoUser.html.twig',[
+            'roles' => $roles
+        ]);
+        }
 }
