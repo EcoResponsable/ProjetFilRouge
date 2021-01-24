@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VendeurController extends AbstractController
 {
     /**
-     * @Route("/allVendeurs", name="vendeur")
+     * @Route("/allVendeurs", name="allVendeurs")
      */
     public function index( VendeurRepository $rep): Response
     {
