@@ -52,7 +52,7 @@ class Vendeur extends User
     private $raisonSociale;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="bigint")
      */
     private $telephone;
 
@@ -60,6 +60,11 @@ class Vendeur extends User
      * @ORM\Column(type="array")
      */
     private $adresse = [];
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
 
     public function getId(): ?int
     {
@@ -164,6 +169,18 @@ class Vendeur extends User
     public function setAdresse(array $adresse): self
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): ?self
+    {
+        $this->description = $description;
 
         return $this;
     }
