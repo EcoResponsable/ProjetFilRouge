@@ -33,6 +33,21 @@ class Client extends User
      */
     private $prenom;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $telephone;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $adresse = [];
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $paiement = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -58,6 +73,42 @@ class Client extends User
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?int
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(int $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?array
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(array $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getPaiement(): ?array
+    {
+        return $this->paiement;
+    }
+
+    public function setPaiement(array $paiement): self
+    {
+        $this->paiement = $paiement;
 
         return $this;
     }
