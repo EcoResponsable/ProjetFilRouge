@@ -14,7 +14,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{vendeur.raisonSociale}}</h5>
                 <p class="card-text">{{vendeur.description}}</p>
-                <a href="#" class="btn btn-primary">Voir les articles en vente</a>
+                <a href="{{ path('produitsVendeur', {'id' : vendeur.id})}}" class="btn btn-primary">Voir les articles en vente</a>
               </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">

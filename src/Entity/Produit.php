@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Produit
 {
+
+    public function __construct()
+    {
+        $this->setTVA(0.055);
+    }
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -28,7 +33,7 @@ class Produit
     private $stock;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $image;
 
@@ -38,17 +43,17 @@ class Produit
     private $poidUnitaire;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    private $prixUnitaireHt;
+    private $prixUnitaireHT;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     private $TVA;
 
@@ -115,14 +120,14 @@ class Produit
         return $this;
     }
 
-    public function getPrixUnitaireHt(): ?int
+    public function getPrixUnitaireHT(): ?int
     {
-        return $this->prixUnitaireHt;
+        return $this->prixUnitaireHT;
     }
 
-    public function setPrixUnitaireHt(int $prixUnitaireHt): self
+    public function setPrixUnitaireHT(int $prixUnitaireHT): self
     {
-        $this->prixUnitaireHt = $prixUnitaireHt;
+        $this->prixUnitaireHT = $prixUnitaireHT;
 
         return $this;
     }

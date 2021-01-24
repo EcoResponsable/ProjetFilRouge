@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<br>
+<div class="container">
+<div class="row">
+
+  {% for produit in produits %} 
+    <div class=" col-md-3 mb-5">
+
+      <div class="card" style="width: 19rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{produit.nom}}</h5>
+            <p class="card-text">{{produit.description}}</p>
+          </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            {{ produit.stock}}
+          </li>
+          <li class="list-group-item">
+            {{ produit.poidUnitaire}}
+          </li>
+          <li class="list-group-item">
+            {{ produit.prixUnitaireHT}}
+          </li>
+        </ul>
+      </div>
+    </div>
+        
+  {% endfor %}
+ </div>
+</div>
+
+{% endblock %}
