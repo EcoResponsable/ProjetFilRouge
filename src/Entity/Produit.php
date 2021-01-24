@@ -120,12 +120,12 @@ class Produit
         return $this;
     }
 
-    public function getPrixUnitaireHT(): ?int
+    public function getPrixUnitaireHT(): ?float
     {
         return $this->prixUnitaireHT;
     }
 
-    public function setPrixUnitaireHT(int $prixUnitaireHT): self
+    public function setPrixUnitaireHT(float $prixUnitaireHT): self
     {
         $this->prixUnitaireHT = $prixUnitaireHT;
 
@@ -144,12 +144,12 @@ class Produit
         return $this;
     }
 
-    public function getTVA(): ?int
+    public function getTVA(): ?float
     {
         return $this->TVA;
     }
 
-    public function setTVA(int $TVA): self
+    public function setTVA(float $TVA): self
     {
         $this->TVA = $TVA;
 

@@ -47,7 +47,7 @@ class AppFixtures extends Fixture
             ->setDescription('Une Description Ici')
             ->setStock(rand(50,500))
             ->setPoidUnitaire(300)
-            ->setPrixUnitaireHT(rand(500,2000)/100)
+            ->setPrixUnitaireHT(fdiv(rand(500,2000),100))
             ->setVendeur($vendeur);
             
             $manager->persist($produit);
