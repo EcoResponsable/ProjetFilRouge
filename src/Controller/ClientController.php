@@ -13,10 +13,6 @@ class ClientController extends AbstractController
      */
     public function index(): Response
     {
-<<<<<<< HEAD
-=======
-        
->>>>>>> 948187e5ee138874f4bd152d662a6da498ae2063
         return $this->render('client/index.html.twig', [
             'controller_name' => 'ClientController',
         ]);
