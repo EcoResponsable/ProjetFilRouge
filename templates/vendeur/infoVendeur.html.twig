@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+
+<h1>Mes informations</h1>
+
+
+<div class="container">
+<div class="card text-center offset-4" style="width: 23rem;">
+    <div class="card-body">
+      
+      <h4 class="card-subtitle mb-2">{{app.user.nom}} {{app.user.prenom}}</h4>
+      <h5 class="card-subtitle mb-2">Entreprise :{{app.user.raisonSociale}}</h5>
+      <h6 class="card-subtitle mb-2">Mail :{{app.user.email}}</h6>
+
+
+
+         <h6 class="card-subtitle mb-2">{{app.user.description}}</h6>
+         <h6 class="card-subtitle mb-2">Siret :{{app.user.siret}}</h6>
+       
+
+      <a href="{{path('vendeurUpdate')}}" class="card-link">Modifier mes informations</a>
+
+      <a href="{{path('produitsUpdate', {'id':app.user.id}) }}"><button type="button" class="btn btn-success">Voir mes produits en vente</button></a> 
+
+     
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

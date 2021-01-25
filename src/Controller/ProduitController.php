@@ -16,7 +16,7 @@ class ProduitController extends AbstractController
     {
 
         $vendeur = $rep->find($id);
-        $produits = $vendeur ->getProduits();
+        $produits = $vendeur->getProduits();
 
         return $this->render('produit/produitsVendeur.html.twig', [
             'produits' => $produits,
