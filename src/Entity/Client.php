@@ -34,17 +34,17 @@ class Client extends User
     private $prenom;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="bigint",nullable=true)
      */
     private $telephone;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array",nullable=true)
      */
     private $adresse = [];
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array",nullable=true)
      */
     private $paiement = [];
 

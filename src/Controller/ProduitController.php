@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\VendeurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,12 +10,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProduitController extends AbstractController
 {
     /**
-     * @Route("/produit", name="produit")
+     * @Route("/vendeur{id}/produit", name="produitsVendeur")
      */
-    public function index(): Response
+    public function index(VendeurRepository $rep,$id): Response
     {
-        return $this->render('produit/index.html.twig', [
-            'controller_name' => 'ProduitController',
+
+        $vendeur = $rep->find($id);
+        $produits = $vendeur ->getProduits();
+
+        return $this->render('produit/produitsVendeur.html.twig', [
+            'produits' => $produits
         ]);
     }
+
+    
 }
