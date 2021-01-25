@@ -11,8 +11,10 @@ Liste des produits du {{vendeur.nom}}
     <div class=" col-md-3 mb-5">
 
       <div class="card" style="width: 19rem;">
+         <img class="card-img-top" src="{{asset(produit.image)}}" alt="...">
           <div class="card-body">
             <h5 class="card-title">{{produit.nom}}</h5>
+           
             <p class="card-text">{{produit.description}}</p>
           </div>
         <ul class="list-group list-group-flush">

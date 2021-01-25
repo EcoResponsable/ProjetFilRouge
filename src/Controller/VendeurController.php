@@ -70,19 +70,7 @@ class VendeurController extends AbstractController
 
     }
 
-    /**
-     * @Route("/produitsUpdate", name="produitsUpdate")
-     */
-    public function produitsUpdate(): Response
-    {
-        $vendeur = $this->getUser();
-        $produits = $vendeur->getProduits();
-
-        return $this->render('produit/produitsUpdate.html.twig', [
-            'produits' => $produits,
-            'vendeur'=>$vendeur
-        ]);
-    }
+   
 
 
 }

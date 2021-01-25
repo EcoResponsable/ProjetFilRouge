@@ -6,7 +6,7 @@
 Liste des produits du {{vendeur.nom}}
 <div class="container">
     <div class="row">
-        <button class="col-6 mx-auto btn btn-success">Ajouter un produit</button>
+       <a href="{{path('addProduit')}}"> <button class="col-6 mx-auto btn btn-success">Ajouter un produit</button></a>
     </div>
 <div class="row mt-5">
     
@@ -35,7 +35,8 @@ Liste des produits du {{vendeur.nom}}
          </li>
         </ul>
         <button class="btn btn-primary m-1">modifier</button>
-        <button class="btn btn-danger m-1">supprimer</button>
+
+       <a href="{{ path('deleteProduits',{'id' :produit.id }) }}"><button class="btn btn-danger m-1">supprimer</button></a> 
       </div>
     </div>
         

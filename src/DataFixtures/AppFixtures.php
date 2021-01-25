@@ -48,7 +48,9 @@ class AppFixtures extends Fixture
             ->setStock(rand(50,500))
             ->setPoidUnitaire(300)
             ->setPrixUnitaireHT(fdiv(rand(500,2000),100))
+            ->setImage('images/'.$value.'.jpg')
             ->setVendeur($vendeur);
+            
             
             $manager->persist($produit);
 
