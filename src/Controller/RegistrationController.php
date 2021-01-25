@@ -21,7 +21,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/inscription/{type?client}", name="register")
      */
-    public function registerClient(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthenticator $authenticator,$type): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthenticator $authenticator,$type): Response
     {
         if($type == 'client'){
             $user = new Client();
@@ -54,7 +54,7 @@ class RegistrationController extends AbstractController
             );
         }
 
-        return $this->render('user/'.$type.'register.html.twig', [
+        return $this->render($type.'/'.$type.'register.html.twig', [
             'registrationForm' => $form->createView(),
             'type' => $type
         ]);

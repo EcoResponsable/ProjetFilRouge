@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+
+<h1>Mes informations</h1>
+
+
+<div class="container">
+<div class="card text-center offset-4" style="width: 23rem;">
+    <div class="card-body">
+      
+      <h4 class="card-subtitle mb-2 ">{{app.user.nom}} {{app.user.prenom}}</h4>
+      <h6 class="card-subtitle mb-2 ">Mail :{{app.user.email}}</h6>
+      <h6 class="card-subtitle mb-2 ">Tel :{{app.user.telephone}}</h6>
+
+      {% for adresse in app.user.adresse %}
+      <h6 class="card-subtitle mb-2 ">Adresse :{{adresse}}</h6>
+      {% endfor %}
+
+      <h5 class="card-title">{{app.user.nom}}</h5>
+
+      <a href="{{path('clientUpdate')}}" class="card-link">Modifier mes informations</a>
+
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
