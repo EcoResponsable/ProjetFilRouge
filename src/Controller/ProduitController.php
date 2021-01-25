@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Form\ProduitFormType;
+use App\Form\ProduitUpdateFormType;
 use App\Repository\ProduitRepository;
 use App\Repository\VendeurRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -66,6 +67,7 @@ class ProduitController extends AbstractController
      */
     public function addProduit(EntityManagerInterface $em, Request $req)
     {
+      
         $produit = new Produit();
 
         $vendeur = $this->getUser();
@@ -88,7 +90,37 @@ class ProduitController extends AbstractController
             $em->flush();
         }
 
-        return $this->render('produit/addProduit.html.twig', [
+        return $this->render('produit/produitAdd.html.twig', [
+            'form' => $form->createView()
+        ]);
+        
+    }
+
+      /**
+     * @Route("/updateProduit{id}", name="updateProduit")
+     */
+    public function updateProduit(ProduitRepository $rep,$id, EntityManagerInterface $em, Request $req)
+    {
+      
+        $produit = $rep->find($id);
+
+         
+        $vendeur = $this->getUser();
+        $produit->setVendeur($vendeur);
+
+        $form = $this->createForm(ProduitUpdateFormType::class, $produit);
+
+        $form->handleRequest($req);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+
+        
+            $em->persist($produit);
+            $em->flush();
+        }
+
+        return $this->render('produit/produitUpdate.html.twig', [
             'form' => $form->createView()
         ]);
         

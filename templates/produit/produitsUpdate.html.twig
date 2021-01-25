@@ -34,7 +34,7 @@ Liste des produits du {{vendeur.nom}}
 
          </li>
         </ul>
-        <button class="btn btn-primary m-1">modifier</button>
+        <a href="{{path('updateProduit', {'id': produit.id})}}"><button class="btn btn-primary m-1">modifier</button></a>
 
        <a href="{{ path('deleteProduits',{'id' :produit.id }) }}"><button class="btn btn-danger m-1">supprimer</button></a> 
       </div>
