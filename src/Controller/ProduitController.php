@@ -19,7 +19,8 @@ class ProduitController extends AbstractController
         $produits = $vendeur ->getProduits();
 
         return $this->render('produit/produitsVendeur.html.twig', [
-            'produits' => $produits
+            'produits' => $produits,
+            'vendeur'=>$vendeur
         ]);
     }
 

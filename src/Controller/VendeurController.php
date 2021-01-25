@@ -15,7 +15,6 @@ class VendeurController extends AbstractController
     public function index( VendeurRepository $rep): Response
     {
         $vendeurs = $rep->findAll();
-        dump($vendeurs);
 
         return $this->render('vendeur/index.html.twig', [
             'vendeurs'=>$vendeurs,

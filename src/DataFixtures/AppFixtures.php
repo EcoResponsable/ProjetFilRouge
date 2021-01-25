@@ -56,6 +56,7 @@ class AppFixtures extends Fixture
         }
 
         for($i = 1 ; $i <=30 ; $i++){
+            
             $tabClient[] = 'Client'.$i;
         }        
  
