@@ -1,21 +1,33 @@
-{% extends 'base.html.twig' %}
+      {% extends 'base.html.twig' %}
 
-{% block title %}Hello VendeurController!{% endblock %}
+        {% block title %}Hello Vendeur{% endblock %}
 
-{% block body %}
-
-{% for vendeur in vendeurs %}
-
-{{vendeur.nom}}
-{{vendeur.siret}}
-{{vendeur.raisonSociale}}
-{{vendeur.email}}
-{{vendeur.telephone}}
-
-{% for adresse in vendeur.adresse %}
-  {{adresse}}  
-{% endfor %}
-
+      {% block body %}
+      <br>  <h3> Liste des producteurs:</h3>
+    <div class="container">
+    <div class="row">
     
-{% endfor %}
-{% endblock %}
+
+      {% for vendeur in vendeurs %} 
+        <div class=" col-md-4 mb-5">
+
+          <div class="card" style="width: 19rem;">
+              <div class="card-body">
+                <h5 class="card-title">{{vendeur.raisonSociale}}</h5>
+                <p class="card-text">{{vendeur.description}}</p>
+                <a href="{{ path('produitsVendeur', {'id' : vendeur.id})}}" class="btn btn-primary">Voir les articles en vente</a>
+              </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                {% for adresse in vendeur.adresse %}
+                  {{adresse}}  
+                {% endfor %}
+              </li>
+            </ul>
+          </div>
+        </div>
+            
+      {% endfor %}
+     </div>
+    </div>
+    {% endblock %}

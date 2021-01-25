@@ -16,6 +16,8 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class RegistrationController extends AbstractController
 {
+
+
     /**
      * @Route("/inscription/{type?client}", name="register")
      */

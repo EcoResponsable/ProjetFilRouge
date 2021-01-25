@@ -67,7 +67,7 @@ class UserController extends AbstractController
 
             $user = $this->getUser();
             $roles = $user->getRoles();
-            dump($roles);
+        
         return $this->render('User/infoUser.html.twig',[
             'roles' => $roles
         ]);

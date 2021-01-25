@@ -53,6 +53,7 @@ class VendeurFormType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('raisonSociale')
+            ->add('description')
             ;
     }
 

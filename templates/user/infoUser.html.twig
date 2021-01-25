@@ -11,14 +11,17 @@
 <div class="card text-center offset-4" style="width: 23rem;">
     <div class="card-body">
       
-     
+      <h4 class="card-subtitle mb-2 text-muted">{{app.user.nom}} {{app.user.prenom}}</h4>
+      <h5 class="card-subtitle mb-2 text-muted">Entreprise :{{app.user.raisonSociale}}</h5>
       <h6 class="card-subtitle mb-2 text-muted">Mail :{{app.user.email}}</h6>
-Role:
+
       {% for role in roles %} 
 
       {% if role == 'ROLE_VENDEUR' %}
-         <h1>vendeur</h1>
+
+         <h6 class="card-subtitle mb-2 text-muted">{{app.user.description}}</h6>
          <h6 class="card-subtitle mb-2 text-muted">Siret :{{app.user.siret}}</h6>
+       
          
       {% elseif role == 'ROLE_CLIENT' %} 
       <h5 class="card-title">{{app.user.nom}}</h5>
@@ -27,11 +30,16 @@ Role:
         
 
       {% endif %}
-    
 {% endfor %}
+
       <a href="{{path('user', {'id':app.user.id})}}" class="card-link">Modifier mes informations</a>
-      <pre>
-      </pre>
+
+      {% for role in roles %}
+      {% if role == 'ROLE_VENDEUR' %}
+      <a href="{{path('produitsVendeur', {'id':app.user.id}) }}"><button type="button" class="btn btn-success">Voir mes produits en vente</button></a> 
+      {% endif %}
+  {% endfor %}
+     
     </div>
   </div>
 </div>

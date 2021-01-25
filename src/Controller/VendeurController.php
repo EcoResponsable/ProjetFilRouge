@@ -10,12 +10,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class VendeurController extends AbstractController
 {
     /**
-     * @Route("/allVendeurs", name="vendeur")
+     * @Route("/allVendeurs", name="allVendeurs")
      */
     public function index( VendeurRepository $rep): Response
     {
         $vendeurs = $rep->findAll();
-        dump($vendeurs);
 
         return $this->render('vendeur/index.html.twig', [
             'vendeurs'=>$vendeurs,
