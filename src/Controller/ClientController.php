@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class ClientController extends AbstractController
 {
     /**
-     * @Route("/infoClient", name="infoClient")
+     * @Route("/clientInfo", name="infoClient")
      */
     public function index(): Response
     {

@@ -32,7 +32,7 @@ class ProduitController extends AbstractController
 
 
     /**
-     * @Route("/vendeur{id}/produit", name="produitsVendeur")
+     * @Route("/produit/vendeur{id}", name="produitsVendeur")
      */
     public function index(VendeurRepository $rep,$id): Response
     {
