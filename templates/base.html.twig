@@ -5,6 +5,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{ asset('css/bootstrap-utilities.min.css')}}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
@@ -13,6 +14,7 @@
 
         <script src="{{ asset('js/jquery.js') }}"></script>
         <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+        
         {% include "footer.html.twig" %}
         {% block javascripts %}{% endblock %}
         

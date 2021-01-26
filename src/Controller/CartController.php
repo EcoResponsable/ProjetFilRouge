@@ -92,4 +92,29 @@ class CartController extends AbstractController
 
 
     }
+
+    
+      /**
+     * 
+     * @Route("/cart/modifQt{id},{action}", name="modifQt")
+     */
+    public function modifQt($id, SessionInterface $session, $action, ProduitRepository $prodRep): Response 
+    {
+
+        $panier = $session->get('panier',[$id]); // On récupere la session avec le panier rempli et on le fout dans $panier
+       
+
+        if(!empty($panier[$id]) && $action == 'moins'){  
+        $panier[$id]--;
+
+        }elseif( $action == 'plus' ){
+          $panier[$id]++;  
+        }
+    
+        $session->set('panier', $panier); //on modifie la session avec le nouveau panier tout beau tout propre
+        
+        return $this->redirectToRoute('cart');
+
+
+    }
 }
