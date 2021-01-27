@@ -33,7 +33,6 @@ class CartController extends AbstractController
         }
 
        
-
         $total =0; // on calcule le total
         foreach($panierWithData as $item){ //pour tous les produuits du tableau de produit
             $total += $item['produit']->getPrixUnitaireHT()*$item['quantite']; // tu m'ajoutes les articles x les qt au total 
