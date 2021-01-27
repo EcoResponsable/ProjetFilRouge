@@ -92,14 +92,19 @@ class OutilCart{
         $panier = $this->session->get('panier',[$id]); // On récupere la session avec le panier rempli et on le fout dans $panier
        
 
-        if(!empty($panier[$id]) && $action == 'moins'){  
+        if($action == 'moins'){  
+            if ($panier[$id] == 1){
+                unset($panier[$id]);
+            }else{
         $panier[$id]--;
+    }
 
         }elseif( $action == 'plus' ){
           $panier[$id]++;  
+           
         }
     
         $this->session->set('panier', $panier); //on modifie la session avec le nouveau panier tout beau tout propre
-        
+
      }
 }
