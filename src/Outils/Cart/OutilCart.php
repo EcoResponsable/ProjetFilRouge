@@ -100,5 +100,6 @@ class OutilCart{
         }
     
         $this->session->set('panier', $panier); //on modifie la session avec le nouveau panier tout beau tout propre
+        
      }
 }
