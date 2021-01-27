@@ -5,12 +5,28 @@
 <br>
 Liste des produits du {{vendeur.nom}}
 <div class="container">
+    <div class="card" style="width: 72.5rem;">
+       <div class="row">
+         <div class="col-md-5">
+           <img src="{{ asset('images/prod.jpg') }}" height="300px" width="300px">
+         </div>
+        <div class="col-md-6">
+           <div class="mt-3">
+             <h5 class="text-end m-3">Avis: ****</h5>
+              <h4> Nom du producteur : {{ vendeur.nom }} </h4>
+             </div><br>
+             <div>Adresse: </div><br>
+             <div>Descriptif: </div>
+      </div>
+    </div>
+</div>
+
 <div class="row">
 
   {% for produit in produits %} 
     <div class=" col-md-3 mb-5">
 
-      <div class="card" style="width: 19rem;">
+      <div class="card mt-3" style="width: 19rem; ">
           <div class="card-body">
             <h5 class="card-title">{{produit.nom}}</h5>
             <p class="card-text">{{produit.description}}</p>
@@ -27,12 +43,12 @@ Liste des produits du {{vendeur.nom}}
           </li>
           <li class="list-group-item">
             prix de la portion TTC : {{ (produit.prixUnitaireHT + produit.prixUnitaireHT * produit.TVA)|number_format(2)}}
-
          </li>
         </ul>
-      </div>
+         </div>
+        <a href="{{ path('panierAdd',{'id' : produit.id}) }}"><button class="btn btn-danger mt-2">Ajouter au panier</button></a>
+     
     </div>
-        
   {% endfor %}
  </div>
 </div>
