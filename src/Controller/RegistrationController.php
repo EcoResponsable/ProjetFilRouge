@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\Panier;
 use App\Entity\Vendeur;
 use App\Form\ClientFormType;
 use App\Form\VendeurFormType;
@@ -43,8 +44,14 @@ class RegistrationController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
+            if($type == 'client'){
+                $panier = new Panier();
+                $panier->setPrixTotalTTC(0)->setClient($user);
+                $entityManager->persist($panier);
+            }
             $entityManager->flush();
             // do anything else you need here, like send an email
+
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,

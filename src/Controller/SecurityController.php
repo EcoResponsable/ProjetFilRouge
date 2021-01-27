@@ -7,6 +7,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -15,18 +16,10 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils, EntityManagerInterface $em): Response
+    public function login(AuthenticationUtils $authenticationUtils, EntityManagerInterface $em, SessionInterface $session): Response
     {
         if ($this->getUser()) {
 
-            $connexion = new Connexion();
-            $time = new DateTime();
-            $time->modify('+ 1 hour');
-            $connexion
-            ->setDateConnexion($time)
-            ->setUser($this->getUser());
-            $em->persist($connexion);
-            $em->flush();
 
             return $this->redirectToRoute('accueil');
         }

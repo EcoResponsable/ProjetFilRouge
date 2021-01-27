@@ -6,20 +6,23 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
         <ul class="navbar-nav me-auto">
-
-
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{path('allVendeurs')}}">Liste des producteurs</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Info/FAQ</a>
           </li>
+        </ul>
           
   
 
-        {% if app.user %}
         <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{path('panier')}}"><i class="fas fa-2x fa-shopping-cart"></i></a>
+          </li>        
+        {% if app.user %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Mon compte
@@ -38,15 +41,13 @@
 
               <li><a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a></li>
             </ul>            
-          </li>
-        </ul>
-        {% else %}
-         <li class="nav-item">
+          {% else %}
+          <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ path('app_login')}}">Connexion</a>
-          </li>
-      
-
+          </li>        
           {% endif %}
+        </ul>
+
       </div>
     </div>
   </nav>

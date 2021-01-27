@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Client;
+use App\Entity\Panier;
 use App\Entity\Produit;
 use App\Entity\Vendeur;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -80,6 +81,10 @@ class AppFixtures extends Fixture
              ;
              
              $manager->persist($client);
+
+            $panier = new Panier();
+            $panier->setPrixTotalTTC(0)->setClient($client);
+            $manager->persist($panier);
  
          }
 
