@@ -14,9 +14,9 @@
 
         {% for p in panier %}
         <li class="list-group-item d-flex justify-content-between lh-sm">
-          <div>
-            <img class="card-img-top" src="{{asset(p.produit.image)}}" alt="..." height="50%" width="5rem">
-          </div>
+        
+            <img class="img-fluid" src="{{asset(p.produit.image)}}" alt="..." height="90px" width="90px">
+      
           <div>
             <h6 class="my-0">{{p.produit.nom}}</h6>
             <small class="text-muted">{{p.produit.prixUnitaireHT}}€/u</small>

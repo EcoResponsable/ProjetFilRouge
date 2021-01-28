@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Adresse;
 use App\Form\AdresseFormType;
+use App\Repository\AdresseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,5 +50,20 @@ class AdresseController extends AbstractController
         return $this->render('adresse/adresseAdd.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+     /**
+     * @Route("/adresseDelete{id}", name="adresseDelete")
+     */
+    public function adresseDelete($id, AdresseRepository $rep, EntityManagerInterface $em): Response
+    {
+
+        $adresse = $rep->find($id);
+        
+        $em->remove($adresse);
+        $em->flush();
+
+
+        return $this->redirectToRoute('adresse');
     }
 }

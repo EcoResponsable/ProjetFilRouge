@@ -16,8 +16,8 @@
             <p class="card-text">Géré par: {{vendeur.nom}} {{vendeur.prenom}}</p>
             <p class="card-text">{{vendeur.description}}</p>
             <p class="card-text"><small class="text-muted">
-              {% for adresse in vendeur.adresse %}
-              {{adresse}}  
+              {% for adresse in vendeur.adresses %}
+              {{adresse.rue}}  {{adresse.codePostal}}  {{adresse.ville}}  
             {% endfor %}
             </small></p>
           </div>
