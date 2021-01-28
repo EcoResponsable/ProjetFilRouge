@@ -29,6 +29,7 @@ class ClientCrudController extends AbstractCrudController
             IntegerField::new('telephone'),
             ArrayField::new('adresse'),
             ArrayField::new('paiement'),
+
         ];
     }
     

@@ -45,3 +45,4 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Produits', 'fas fa-list', Produit::class);
     }
 }
+
