@@ -17,6 +17,12 @@
           <div>
             <h6 class="my-0">{{adresse}}</h6>
           </div>
+          {% if adresse.isDefault == true %}
+          &starf; 
+          {% else %}
+          <a href="{{path('setDefault', {'id':adresse.id})}}">&star;</a>
+
+          {% endif %}
           <a href="{{path('adresseDelete', {'id':adresse.id}) }}" class="text-danger"><i class="fas fa-trash-alt"></i></a>
         </li>
         {% endfor %}

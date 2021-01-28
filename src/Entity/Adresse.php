@@ -59,9 +59,15 @@ class Adresse
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isDefault;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
+        $this->isDefault = false;
     }
 
     public function getId(): ?int
@@ -161,6 +167,18 @@ class Adresse
     public function removeUser(User $user): self
     {
         $this->user->removeElement($user);
+
+        return $this;
+    }
+
+    public function getIsDefault(): ?bool
+    {
+        return $this->isDefault;
+    }
+
+    public function setIsDefault(bool $isDefault): self
+    {
+        $this->isDefault = $isDefault;
 
         return $this;
     }

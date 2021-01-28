@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommandeController!
+{% endblock %}
+
+{% block body %}
+	<h1>Ma commande</h1>
+
+	<p>Adresse par defaut:</p>
+
+	{% for adresse in adresses %}
+		{% if adresse.isDefault == true %}
+
+			{{adresse}}
+
+		{% endif %}
+
+	{% endfor %}
+
+
+	<a href="#" class="btn btn-primary">Ajouter un adresse de livraison</a>
+
+
+{% endblock %}

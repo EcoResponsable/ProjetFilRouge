@@ -66,4 +66,40 @@ class AdresseController extends AbstractController
 
         return $this->redirectToRoute('adresse');
     }
+
+    /**
+     * @Route("/setDefault{id}", name="setDefault")
+     */
+    public function setDefault($id, AdresseRepository $rep, EntityManagerInterface $em): Response
+    {
+        if( $rep->findDefault()){
+
+            $ancienneAdresses = $rep->findDefault();
+            foreach($ancienneAdresses as $ancienneAdresse){
+                
+                $ancienneAdresse->setIsDefault(false);
+                $em->persist($ancienneAdresse);
+            }
+
+           
+
+            $adresse = $rep->find($id);
+            $adresse->setIsDefault(true);
+    
+            $em->persist($adresse);
+            $em->flush();
+    
+        }else{
+
+            $adresse = $rep->find($id);
+            $adresse->setIsDefault(true);
+    
+            $em->persist($adresse);
+            $em->flush();
+    
+        }
+
+       
+        return $this->redirectToRoute('adresse');
+    }
 }
