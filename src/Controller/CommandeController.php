@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommandeController extends AbstractController
 {
     /**
-     * @Route("/commande", name="commande")
+     * @Route("/clientcommande", name="commande")
      */
     public function index(SessionInterface $session, ProduitRepository $rep): Response
     {
