@@ -41,7 +41,7 @@ class PanierController extends AbstractController
     }
 
     /**
-     * @Route("/panierUpdate/{id}/{action}", name="panierUpdate")
+     * @Route("/panierUpdate/{id}/{action?}", name="panierUpdate")
      */
     public function panierUpdate(SessionInterface $session, Request $request,$id,$action): Response
     {

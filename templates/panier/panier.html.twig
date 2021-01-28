@@ -15,6 +15,9 @@
         {% for p in panier %}
         <li class="list-group-item d-flex justify-content-between lh-sm">
           <div>
+            <img class="card-img-top" src="{{asset(p.produit.image)}}" alt="..." height="50%" width="50%"">
+          </div>
+          <div>
             <h6 class="my-0">{{p.produit.nom}}</h6>
             <small class="text-muted">{{p.produit.prixUnitaireHT}}€/u</small>
           </div>
@@ -34,8 +37,9 @@
           <span>Total :</span>
           <strong>{{ prixTotal }}€</strong>
         </li>
-
       </ul>
+      <a href="#"><button type="button" class="btn btn-outline-danger">Retour aux articles</button></a>
+      <a href="#"><button type="button" class="btn btn-success">Valider ma commande</button></a>
     </div>
 </div>
 {% endblock %}
