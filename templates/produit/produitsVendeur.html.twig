@@ -56,9 +56,6 @@ Liste des produits du {{vendeur.nom}}
          <li class="list-group-item">
            <a href="{{ path('panierUpdate', {'id' : produit.id, 'action' : 'plus'})}}" class="btn btn-success" role="button"><i class="fas fa-2x fa-cart-plus"></i></a>
          </li>
-         <li class="list-group-item">
-          <a href="{{path('cart_add',{'id':produit.id})}}"><button class="btn btn-success">Ajouter au panier</button></a>
-       </li>
         </ul>
       
       </div>
