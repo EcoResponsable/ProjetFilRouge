@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Adresse;
 use App\Entity\Client;
 use App\Entity\Panier;
 use App\Entity\Produit;
@@ -21,12 +22,22 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+
        for($i = 1 ; $i <=10 ; $i++){
            $tabVendeur[] = 'Vendeur'.$i;
        }        
 
         foreach ($tabVendeur as $value) {
 
+            $adresse = new Adresse();
+            $adresse
+            ->setNom('Michel')
+            ->setPrenom('André')
+            ->setRue('35 Rue des lilas')
+            ->setVille('Paris')
+            ->setCodePostal('75018')
+            ->setPays('France');
+            
             
             $vendeur = new Vendeur();
             $password = $this->encoder->encodePassword($vendeur, $value);
@@ -35,11 +46,12 @@ class AppFixtures extends Fixture
             ->setRaisonSociale($value)
             ->setSiret(mt_rand(111111,999999))
             ->setTelephone(mt_rand(1111111111,9999999999))
-            ->setAdresse(['Adresse de'.$value])
             ->setDescription('Description du '.$value)
+            ->addAdress($adresse)
             ->setEmail($value.'@gmail.com')
             ->setPassword($password)
             ;
+            $manager->persist($adresse);
             $manager->persist($vendeur);
 
             for($j = 1 ; $j <=10 ; $j++){
@@ -65,22 +77,28 @@ class AppFixtures extends Fixture
  
          foreach ($tabClient as $value) {
  
-             
-             $client = new Client();
-             $password = $this->encoder->encodePassword($client, $value);
-             $client->setNom($value)
-             ->setPrenom($value)
-             ->setTelephone(mt_rand(1111111111,9999999999))
-             ->setAdresse([
-                 'Adresse de'.$value
-                 ])
-             ->setPaiement(['mastercard'
-             ])
-             ->setEmail($value.'@gmail.com')
-             ->setPassword($password)
-             ;
-             
-             $manager->persist($client);
+            $adresse = new Adresse();
+            $adresse
+            ->setNom('Dupont')
+            ->setPrenom('Michelle')
+            ->setRue('50 avenue des chataignes')
+            ->setVille('Gisors')
+            ->setCodePostal('27140')
+            ->setPays('France');
+            $client = new Client();
+            $password = $this->encoder->encodePassword($client, $value);
+            $client->setNom($value)
+            ->setPrenom($value)
+            ->setPaiement(['mastercard'
+            ])
+            ->setTelephone(mt_rand(1111111111,9999999999))
+            ->addAdress($adresse)
+            ->setEmail($value.'@gmail.com')
+            ->setPassword($password)
+            ;
+            
+            $manager->persist($adresse);
+            $manager->persist($client);
  
          }
 

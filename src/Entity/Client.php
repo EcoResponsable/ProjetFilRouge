@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,6 +15,7 @@ class Client extends User
     public function __construct()
     {
         $this->setRoles(['ROLE_CLIENT']);
+        $this->adresses = new ArrayCollection();
     }
     
     /**
@@ -37,11 +39,6 @@ class Client extends User
      * @ORM\Column(type="bigint",nullable=true)
      */
     private $telephone;
-
-    /**
-     * @ORM\Column(type="array",nullable=true)
-     */
-    private $adresse = [];
 
     /**
      * @ORM\Column(type="array",nullable=true)
@@ -85,18 +82,6 @@ class Client extends User
     public function setTelephone(int $telephone): self
     {
         $this->telephone = $telephone;
-
-        return $this;
-    }
-
-    public function getAdresse(): ?array
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(array $adresse): self
-    {
-        $this->adresse = $adresse;
 
         return $this;
     }

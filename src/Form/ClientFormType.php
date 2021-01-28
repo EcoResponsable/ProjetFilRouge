@@ -48,6 +48,11 @@ class ClientFormType extends AbstractType
                 'label_attr'=>[
                     'class'=>'form-label'
                 ]
+            ])
+            ->add('telephone',null,[
+                'label_attr'=>[
+                    'class'=>'form-label'
+                ]
             ]);
     }
 
