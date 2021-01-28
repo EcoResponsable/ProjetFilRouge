@@ -13,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Client extends User
 {
 
+    public function __toString()
+    {
+        return $this->nom.' '.$this->prenom;
+    }
+
     public function __construct()
     {
         $this->setRoles(['ROLE_CLIENT']);

@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ProduitCommande
 {
+
+    public function __toString()
+    {
+        return $this->produit->__toString();
+    }
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

@@ -13,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Produit
 {
 
+    public function __toString()
+    {
+        return $this->nom;
+    }
+
     public function __construct()
     {
         $this->setTVA(0.055);
