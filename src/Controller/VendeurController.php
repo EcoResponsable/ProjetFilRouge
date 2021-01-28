@@ -26,7 +26,7 @@ class VendeurController extends AbstractController
     }
 
     /**
-         * @Route("/infoVendeur", name="infoVendeur")
+         * @Route("/vendeurInfo", name="infoVendeur")
          */
         public function infoUser()
         {   

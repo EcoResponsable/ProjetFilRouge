@@ -15,10 +15,10 @@ class ProduitCrudController extends AbstractCrudController
         return Produit::class;
     }
 
+    
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
             TextField::new('nom'),
             TextField::new('image'),
             TextField::new('description'),

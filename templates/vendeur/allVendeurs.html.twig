@@ -13,6 +13,7 @@
 
           <div class="card" style="width: 19rem;">
               <div class="card-body">
+                <img src="{{ asset('images/' ~ vendeur.raisonSociale ~ '.jpg')}}" alt="vendeur" class="img-fluid">
                 <h5 class="card-title">{{vendeur.raisonSociale}}</h5>
                 <p class="card-text">{{vendeur.description}}</p>
                 <a href="{{ path('produitsVendeur', {'id' : vendeur.id})}}" class="btn btn-primary">Voir les articles en vente</a>

@@ -52,7 +52,9 @@ Liste des produits du {{vendeur.nom}}
           </li>
           <li class="list-group-item">
             prix de la portion TTC : {{ (produit.prixUnitaireHT + produit.prixUnitaireHT * produit.TVA)|number_format(2)}}
-
+         </li>
+         <li class="list-group-item">
+           <a href="{{ path('panierUpdate', {'id' : produit.id, 'action' : 'plus'})}}" class="btn btn-success" role="button"><i class="fas fa-2x fa-cart-plus"></i></a>
          </li>
          <li class="list-group-item">
           <a href="{{path('cart_add',{'id':produit.id})}}"><button class="btn btn-success">Ajouter au panier</button></a>
