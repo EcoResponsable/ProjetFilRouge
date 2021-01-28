@@ -101,6 +101,11 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
             return new RedirectResponse($targetPath);
         }
 
+        $connexion = new Connexion();        
+        $connexion->setDateConnexion(new DateTime('now'))->setUser($request->getUser());
+        $this->entityManager->persist($connexion);
+        $this->entityManager->flush();
+
         return new RedirectResponse($this->urlGenerator->generate('succes'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }

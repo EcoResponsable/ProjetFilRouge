@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Connexion;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +14,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils, EntityManagerInterface $em, SessionInterface $session): Response
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
 

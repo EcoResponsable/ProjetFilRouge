@@ -21,7 +21,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-       for($i = 1 ; $i <=30 ; $i++){
+       for($i = 1 ; $i <=10 ; $i++){
            $tabVendeur[] = 'Vendeur'.$i;
        }        
 
@@ -42,14 +42,14 @@ class AppFixtures extends Fixture
             ;
             $manager->persist($vendeur);
 
-            for($i = 1 ; $i <=10 ; $i++){
+            for($j = 1 ; $j <=10 ; $j++){
             $produit = new Produit();
-            $produit->setNom('produit '.$i.' du '.$value)
+            $produit->setNom('produit '.$j.' du '.$value)
             ->setDescription('Une Description Ici')
             ->setStock(rand(50,500))
             ->setPoidUnitaire(300)
             ->setPrixUnitaireHT(fdiv(rand(500,2000),100))
-            ->setImage('images/'.$value.'.jpg')
+            ->setImage('images/produit'.$j.'.jpg')
             ->setVendeur($vendeur);
             
             
@@ -58,9 +58,9 @@ class AppFixtures extends Fixture
             }
         }
 
-        for($i = 1 ; $i <=30 ; $i++){
+        for($k = 1 ; $k <=30 ; $k++){
             
-            $tabClient[] = 'Client'.$i;
+            $tabClient[] = 'Client'.$k;
         }        
  
          foreach ($tabClient as $value) {
@@ -81,10 +81,6 @@ class AppFixtures extends Fixture
              ;
              
              $manager->persist($client);
-
-            $panier = new Panier();
-            $panier->setPrixTotalTTC(0)->setClient($client);
-            $manager->persist($panier);
  
          }
 

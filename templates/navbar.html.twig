@@ -43,11 +43,13 @@
             </ul>            
           {% else %}
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ path('app_login')}}">Connexion</a>
+            <a class="nav-link active border border-2 border-white rounded-pill mx-1" aria-current="page" href="{{ path('app_login')}}">Connexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active border border-2 border-white rounded-pill mx-1" aria-current="page"  href="{{path('register')}}">S'inscrire</a>
           </li>        
           {% endif %}
         </ul>
-
       </div>
     </div>
   </nav>

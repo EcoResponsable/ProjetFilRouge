@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,7 +14,6 @@ class Client extends User
     public function __construct()
     {
         $this->setRoles(['ROLE_CLIENT']);
-        $this->paniers = new ArrayCollection();
     }
     
     /**
@@ -50,11 +47,6 @@ class Client extends User
      * @ORM\Column(type="array",nullable=true)
      */
     private $paiement = [];
-
-    /**
-     * @ORM\OneToMany(targetEntity=Panier::class, mappedBy="client")
-     */
-    private $paniers;
 
     public function getId(): ?int
     {
@@ -117,36 +109,6 @@ class Client extends User
     public function setPaiement(array $paiement): self
     {
         $this->paiement = $paiement;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Panier[]
-     */
-    public function getPaniers(): Collection
-    {
-        return $this->paniers;
-    }
-
-    public function addPanier(Panier $panier): self
-    {
-        if (!$this->paniers->contains($panier)) {
-            $this->paniers[] = $panier;
-            $panier->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removePanier(Panier $panier): self
-    {
-        if ($this->paniers->removeElement($panier)) {
-            // set the owning side to null (unless already changed)
-            if ($panier->getClient() === $this) {
-                $panier->setClient(null);
-            }
-        }
 
         return $this;
     }

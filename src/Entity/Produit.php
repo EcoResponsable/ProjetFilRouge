@@ -70,11 +70,6 @@ class Produit
      */
     private $categorie;
 
-    /**
-     * @ORM\OneToMany(targetEntity=ProduitPanier::class, mappedBy="produit")
-     */
-    private $produitPaniers;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -184,36 +179,6 @@ class Produit
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ProduitPanier[]
-     */
-    public function getProduitPaniers(): Collection
-    {
-        return $this->produitPaniers;
-    }
-
-    public function addProduitPanier(ProduitPanier $produitPanier): self
-    {
-        if (!$this->produitPaniers->contains($produitPanier)) {
-            $this->produitPaniers[] = $produitPanier;
-            $produitPanier->setProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduitPanier(ProduitPanier $produitPanier): self
-    {
-        if ($this->produitPaniers->removeElement($produitPanier)) {
-            // set the owning side to null (unless already changed)
-            if ($produitPanier->getProduit() === $this) {
-                $produitPanier->setProduit(null);
-            }
-        }
 
         return $this;
     }

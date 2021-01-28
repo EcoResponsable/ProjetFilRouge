@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Panier;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,6 +20,7 @@ class PanierController extends AbstractController
 
             $produits = $session->get('panier', []);
             $prixTotal = 0;
+            $panier = [];
 
             foreach($produits as $id => $quantite){
                 $panier[] = [
@@ -41,36 +41,21 @@ class PanierController extends AbstractController
     }
 
     /**
-     * @Route("/panierAdd{id}", name="panierAdd")
+     * @Route("/panierUpdate/{id}/{action}", name="panierUpdate")
      */
-    public function panierAdd(SessionInterface $session,$id, Request $request): Response
-    {
-
-        $panier = $session->get('panier',[]);
-        if(empty($panier[$id])){
-            $panier[$id] = 1;
-        }else{
-            $panier[$id]++;
-        };
-        
-        $session->set('panier',$panier);
-
-        return $this->redirect($request->headers->get('referer'));
-
-    }
-
-    /**
-     * @Route("/panierSub{id}", name="panierSub")
-     */
-    public function panierSub(SessionInterface $session,$id, Request $request): Response
+    public function panierUpdate(SessionInterface $session, Request $request,$id,$action): Response
     {
 
         $panier = $session->get('panier',[]);
 
-        if($panier[$id] > 1){
-            $panier[$id]--;
+        if($action == 'moins'){            
+            if($panier[$id] == 1){
+                unset($panier[$id]);
+            }else{
+                $panier[$id]--;
+            }
         }else{
-            unset($panier[$id]);
+            empty($panier[$id]) ? $panier[$id] = 1 : $panier[$id]++;
         };
         
         $session->set('panier',$panier);
