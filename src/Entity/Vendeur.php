@@ -17,6 +17,7 @@ class Vendeur extends User
     {
         $this->setRoles(['ROLE_VENDEUR']);
         $this->produits = new ArrayCollection();
+        $this->adresses = new ArrayCollection();
     }
 
     /**
@@ -55,11 +56,6 @@ class Vendeur extends User
      * @ORM\Column(type="bigint")
      */
     private $telephone;
-
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $adresse = [];
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -157,18 +153,6 @@ class Vendeur extends User
     public function setTelephone(int $telephone): self
     {
         $this->telephone = $telephone;
-
-        return $this;
-    }
-
-    public function getAdresse(): ?array
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(array $adresse): self
-    {
-        $this->adresse = $adresse;
 
         return $this;
     }

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdresseController!{% endblock %}
+
+{% block body %}
+
+<div class="container my-5">
+    <div class="col-8 mx-auto">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Vos adresses</span>
+        <span class="badge bg-info rounded-pill">{{adresses|length}}</span>
+      </h4>
+      <ul class="list-group mb-3">
+
+        {% for adresse in adresses %}
+        <li class="list-group-item d-flex justify-content-between lh-sm">
+          <div>
+            <h6 class="my-0">{{adresse}}</h6>
+          </div>
+          <a href="#" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ path('adresseAdd') }}" class="btn btn-success">Ajouter une adresse</a>
+    </div>
+</div>
+
+{% endblock %}

@@ -51,9 +51,9 @@ class ClientController extends AbstractController
             }
         
 
-                    return $this->render('vendeur/vendeurUpdate.html.twig', [
-                        'form' => $form->createView()
-                    ]);
+        return $this->render('client/clientUpdate.html.twig', [
+            'form' => $form->createView()
+        ]);
 
     }
 }

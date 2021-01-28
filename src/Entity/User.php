@@ -45,9 +45,15 @@ abstract class User implements UserInterface
      */
     protected $connexions;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Adresse::class, mappedBy="user")
+     */
+    protected $adresses;
+
     public function __construct()
     {
         $this->connexions = new ArrayCollection();
+        $this->adresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,6 +164,33 @@ abstract class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|Adresse[]
+     */
+    public function getAdresses(): Collection
+    {
+        return $this->adresses;
+    }
+
+    public function addAdress(Adresse $adress): self
+    {
+        if (!$this->adresses->contains($adress)) {
+            $this->adresses[] = $adress;
+            $adress->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdress(Adresse $adress): self
+    {
+        if ($this->adresses->removeElement($adress)) {
+            $adress->removeUser($this);
+        }
+
+        return $this;
     }
 
 }

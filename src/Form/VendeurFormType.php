@@ -44,10 +44,6 @@ class VendeurFormType extends AbstractType
                     'class'=>'form-label'
                 ]
             ])
-            ->add('adresse', CollectionType::class, [
-                'entry_type'=>TextType::class, 
-                'allow_add'=>true
-            ])
             ->add('telephone')
             ->add('nom')
             ->add('prenom')
