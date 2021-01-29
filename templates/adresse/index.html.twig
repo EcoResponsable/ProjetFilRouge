@@ -1,34 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdresseController!{% endblock %}
+{% block title %}Hello AdresseController!
+{% endblock %}
 
 {% block body %}
 
-<div class="container my-5">
-    <div class="col-8 mx-auto">
-      <h4 class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-muted">Vos adresses</span>
-        <span class="badge bg-info rounded-pill">{{adresses|length}}</span>
-      </h4>
-      <ul class="list-group mb-3">
+	<div class="container my-5">
+		<div class="col-8 mx-auto">
+			<h4 class="d-flex justify-content-between align-items-center mb-3">
+				<span class="text-muted">Vos adresses</span>
+				<span class="badge bg-info rounded-pill">{{adresses|length}}</span>
+			</h4>
+			<ul class="list-group mb-3">
 
-        {% for adresse in adresses %}
-        <li class="list-group-item d-flex justify-content-between lh-sm">
-          <div>
-            <h6 class="my-0">{{adresse}}</h6>
-          </div>
-          {% if adresse.isDefault == true %}
-          &starf; 
-          {% else %}
-          <a href="{{path('setDefault', {'id':adresse.id})}}">&star;</a>
-
-          {% endif %}
-          <a href="{{path('adresseDelete', {'id':adresse.id}) }}" class="text-danger"><i class="fas fa-trash-alt"></i></a>
-        </li>
-        {% endfor %}
-    </ul>
-    <a href="{{ path('adresseAdd') }}" class="btn btn-success">Ajouter une adresse</a>
-    </div>
-</div>
+				{% for adresse in adresses %}
+					<li class="list-group-item d-flex justify-content-between ">
+						<div class=" flex-grow-1 ">
+							<h6 class="my-0 ">{{adresse}}</h6>
+						</div>
+						{% if adresse.isDefault == true %}
+							<i class="fas fa-star text-warning px-5"></i>
+						{% else %}
+							<a class="text-warning text-muted px-5" href="{{path('setDefault', {'id':adresse.id})}}">
+								<i class="far fa-star "></i>
+							</a>
+						{% endif %}
+						<a href="{{path('adresseDelete', {'id':adresse.id}) }}">
+							<i class=" px-2 fas fa-trash-alt text-danger"></i>
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+			<a href="{{ path('adresseAdd') }}" class="btn btn-success">Ajouter une adresse</a>
+		</div>
+	</div>
 
 {% endblock %}
