@@ -12,13 +12,23 @@
 
 
 			<li class="list-group-item">
-					<h6>Adresse par défaut</h6>
-					{% for adresse in adresses %}
-						{% if adresse.isDefault == true %}
-							<p>{{adresse}}</p>
-						{% endif %}
-					{% endfor %}
-					<a href="#" class="btn btn-primary">Choisir une autre adresse</a>
+					<h6>Vos adresses</h6>
+					<ul class="list-group">
+
+						{% for adresse in adresses %}
+						<li class="list-group-item d-flex justify-content-between">
+						  <div>
+							<h6 class="my-0">{{adresse}}</h6>
+						  </div>
+						  {% if adresse.isDefault == true %}
+						  <i class="fas fa-star text-warning px-5"></i>
+						  {% else %}
+						  <a href="{{path('setDefault', {'id':adresse.id})}}" class="text-dark px-5"><i class="far fa-star"></i></a>			
+						  {% endif %}
+						</li>
+						{% endfor %}
+					</ul>
+					<a href="{{ path('adresseAdd') }}" class="btn btn-sm btn-primary mt-1">Ajouter une nouvelle adresse</a>
 				</li>
 
 			
@@ -69,7 +79,7 @@
 		</ul>
 	</div>
 	<div class="col-3">
-		<div class="card" style="width: 18rem;">
+		<div class="card sticky-top" style="width: 18rem;">
 			<div class="card-body">
 			<span class="card-text text-muted lh-0" style="font-size: 12px; text-align: justify;">En passant votre commande, vous acceptez les Conditions générales de vente d’Amazon. Veuillez consulter notre Notice Protection de vos informations personnelles, notre Notice Cookies et notre Notice Annonces publicitaires basées sur vos centres d’intérêt.</span>
 			</div>

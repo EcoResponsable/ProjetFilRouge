@@ -70,7 +70,7 @@ class AdresseController extends AbstractController
     /**
      * @Route("/setDefault{id}", name="setDefault")
      */
-    public function setDefault($id, EntityManagerInterface $em, AdresseRepository $rep): Response
+    public function setDefault($id, EntityManagerInterface $em, Request $request): Response
     {
 
         $user = $this->getUser();
@@ -88,7 +88,7 @@ class AdresseController extends AbstractController
         $em->flush();
 
 
-       
-        return $this->redirectToRoute('adresse');
+        return $this->redirect($request->headers->get('referer'));
+        // return $this->redirectToRoute('adresse');
     }
 }
