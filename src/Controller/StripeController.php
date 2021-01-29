@@ -18,6 +18,7 @@ class StripeController extends AbstractController
     public function index($reference,EntityManagerInterface $em,CommandeRepository $rep): Response
     {
 
+        // commentaire
         \Stripe\Stripe::setApiKey('sk_test_51IEsCZKW6V2JlCa641c1pQGFTHrMFPRb1msZrQBEdPonmxK9Y334i1YrP2UZUnuwwTraPy9qCi2J1zcw9thmSKjp00SqLjkdM7');
 
         $commande = $rep->findOneBy(['reference'=>$reference]);
