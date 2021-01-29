@@ -1,9 +1,41 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<h1>MERCI POUR VOTRE COMMANDE</h1>
-
 <div>
     <h4>Récapitulatif de la commande</h4>
+    <button type="button" class="btn btn-primary" id="checkout-button">Payez</button>
 </div>
 {% endblock %}
+
+{% block javascripts %}
+<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript">
+
+// Create an instance of the Stripe object with your publishable API key
+var stripe = Stripe("pk_test_51IEsCZKW6V2JlCa69dXndJeLPKk1JW9e1nXj3Q2fVDutmHWbJthEhRXQxTSNdn9X8D9DAYD1EGls25ElvxDLU2OY00iJ5FfzG3");
+var checkoutButton = document.getElementById("checkout-button");
+checkoutButton.addEventListener("click", function () {
+	fetch('/stripe/{{reference}}', {
+		method: "POST",
+	})
+	.then(function (response) {
+		return response.json();
+	})
+	.then(function (session) {
+		return stripe.redirectToCheckout({ sessionId: session.id });
+	})
+	.then(function (result) {
+	// If redirectToCheckout fails due to a browser or network
+	// error, you should display the localized error message to your
+	// customer using error.message.
+	if (result.error) {
+		alert(result.error.message);
+	}
+	})
+	.catch(function (error) {
+		console.error("Error:", error);
+	});
+});
+  </script>
+  {% endblock %}

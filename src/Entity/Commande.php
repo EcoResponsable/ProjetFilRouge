@@ -36,6 +36,16 @@ class Commande
      */
     private $client;
 
+    /**
+     * @ORM\Column(type="string", length=255,nullable=true)
+     */
+    private $stripeSessionId;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $reference;
+
     public function __construct()
     {
         $this->produitCommandes = new ArrayCollection();
@@ -97,6 +107,30 @@ class Commande
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getStripeSessionId(): ?string
+    {
+        return $this->stripeSessionId;
+    }
+
+    public function setStripeSessionId(string $stripeSessionId): self
+    {
+        $this->stripeSessionId = $stripeSessionId;
+
+        return $this;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(string $reference): self
+    {
+        $this->reference = $reference;
 
         return $this;
     }
