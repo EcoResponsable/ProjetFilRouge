@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="container">
+    <h2>Historique de commande</h2>
+    {% for commande in commandes %}
+    <ul class="list-group">
+        <li class="list-group-item"><h6>Commande n°{{ commande.reference }}</h6></li>
+
+        {% for produit in commande.produitCommandes %}
+
+                <li class="list-group-item">
+                    <img src="{{ asset(produit.produit.image) }}" alt="" width="30px" height="30px">
+                    {{ produit.produit }}
+                </li>
+
+        {% endfor %}
+
+    </ul>
+    <br>
+    {% endfor %}
+</div>
+{% endblock %}

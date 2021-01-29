@@ -7,24 +7,33 @@
 <h1>Mes informations</h1>
 
 
-<div class="container">
-<div class="card text-center offset-4" style="width: 23rem;">
+<div class="row">
+
+  <div class="card" style="width: 23rem;">
     <div class="card-body">
       
       <h4 class="card-subtitle mb-2 ">{{app.user.nom}} {{app.user.prenom}}</h4>
-      <h6 class="card-subtitle mb-2 ">Mail :{{app.user.email}}</h6>
-      <h6 class="card-subtitle mb-2 ">Tel :{{app.user.telephone}}</h6>
-
-      {# {% for adresse in app.user.adresse %}
-      <h6 class="card-subtitle mb-2 ">Adresse :{{adresse}}</h6>
-      {% endfor %} #}
-
-      <h5 class="card-title">{{app.user.nom}}</h5>
+      <h6 class="card-subtitle mb-2 ">Email : {{app.user.email}}</h6>
+      <h6 class="card-subtitle mb-2 ">Tel : {{app.user.telephone}}</h6>
+      <h6 class="card-subtitle mb-2">{{app.user.nom}}</h6>
 
       <a href="{{path('clientUpdate')}}" class="card-link btn btn-primary">Modifier mes informations</a>
 
     </div>
   </div>
+
+  <div class="card" style="width: 23rem;">
+    <div class="card-body">
+      
+      <h4 class="card-subtitle mb-2 ">Mes commandes &ThickSpace;<span class="badge bg-warning text-dark">{{commandes |length}}</span></h4>
+      <h6 class="card-subtitle mb-2 ">Dernière commande : {{app.user.email}}</h6>
+      <h6 class="card-subtitle mb-2 ">Tel : {{app.user.telephone}}</h6>
+      <h6>&ThinSpace;</h6>
+      <a href="{{path('clientCommandes')}}" class="card-link btn btn-warning">Accéder à l'historique</a>
+
+    </div>
+  </div>
+  
 </div>
 
 {% endblock body %}
