@@ -6,7 +6,7 @@
 Liste des produits du {{vendeur.nom}}
 <div class="container">
     <div class="row">
-       <a href="{{path('addProduit')}}"> <button class="col-6 mx-auto btn btn-success">Ajouter un produit</button></a>
+       <a href="{{path('addProduit')}}" class="col-6 mx-auto btn btn-success">Ajouter un produit</a>
     </div>
 <div class="row mt-5">
     
@@ -15,8 +15,9 @@ Liste des produits du {{vendeur.nom}}
     <div class=" col-md-3 mb-5">
 
       <div class="card" style="width: 19rem;">
-          <div class="card-body">
+          <div class="card-body text-center">
             <h5 class="card-title">{{produit.nom}}</h5>
+            <img src="{{asset(produit.image)}}" alt="" width="200px" height="200px">
             <p class="card-text">{{produit.description}}</p>
           </div>
         <ul class="list-group list-group-flush">
@@ -33,10 +34,12 @@ Liste des produits du {{vendeur.nom}}
             prix de la portion TTC : {{ (produit.prixUnitaireHT + produit.prixUnitaireHT * produit.TVA)|number_format(2)}}
 
          </li>
+         <li class="list-group-item p-0 d-flex justify-content-between">
+         <a href="{{path('updateProduit', {'id': produit.id})}}" class="btn btn-sm col-6 btn-primary">modifier</a>
+         <a href="{{ path('deleteProduits',{'id' :produit.id }) }}" class="btn btn-sm col-5 btn-danger">supprimer</a> 
+       </li>
         </ul>
-        <a href="{{path('updateProduit', {'id': produit.id})}}"><button class="btn btn-primary m-1">modifier</button></a>
 
-       <a href="{{ path('deleteProduits',{'id' :produit.id }) }}"><button class="btn btn-danger m-1">supprimer</button></a> 
       </div>
     </div>
         

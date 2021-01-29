@@ -19,9 +19,20 @@
   
 
         <ul class="navbar-nav ms-auto">
+
+        {% if app.user %}
+          {% if app.user.roles == ['ROLE_VENDEUR'] %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{path('produitsUpdate', {'id':app.user.id}) }}"><i class="fas fa-2x fa-store"></i></a>
+          </li>
+          {% endif %}
+          {% else %}
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{path('panier')}}"><i class="fas fa-2x fa-shopping-cart"></i></a>
-          </li>        
+          </li>
+        {% endif %}
+          
+
         {% if app.user %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
