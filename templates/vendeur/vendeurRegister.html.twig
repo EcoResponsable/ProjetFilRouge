@@ -33,11 +33,6 @@
               class: 'form-label'
             }
         }) }}
-
-          <label for="vendeur_form[adresse][0]"   class= 'form-label'>Adresse</label>
-          <input type="text" name="vendeur_form[adresse][0]" class="form-control">
-          {% do registrationForm.adresse.setRendered %} 
-          <!-- Indique a symfony que le champ adresse a été rendu  -->
           
         {{ form_rest(registrationForm)}} 
     

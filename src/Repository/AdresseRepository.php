@@ -35,17 +35,5 @@ class AdresseRepository extends ServiceEntityRepository
         ;
     }
     */
-
-    
-    public function findDefault(): ?Adresse
-    {
-
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.isDefault = :val')
-            ->setParameter('val', true)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
     
 }

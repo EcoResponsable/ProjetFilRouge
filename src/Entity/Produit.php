@@ -13,10 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
 class Produit
 {
 
+    public function __toString()
+    {
+        return $this->nom;
+    }
+
     public function __construct()
     {
         $this->setTVA(0.055);
         $this->produitPaniers = new ArrayCollection();
+        $this->produitCommandes = new ArrayCollection();
     }
     /**
      * @ORM\Id
@@ -69,6 +75,11 @@ class Produit
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="produit")
      */
     private $categorie;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ProduitCommande::class, mappedBy="produit")
+     */
+    private $produitCommandes;
 
     public function getId(): ?int
     {
@@ -179,6 +190,36 @@ class Produit
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProduitCommande[]
+     */
+    public function getProduitCommandes(): Collection
+    {
+        return $this->produitCommandes;
+    }
+
+    public function addProduitCommande(ProduitCommande $produitCommande): self
+    {
+        if (!$this->produitCommandes->contains($produitCommande)) {
+            $this->produitCommandes[] = $produitCommande;
+            $produitCommande->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduitCommande(ProduitCommande $produitCommande): self
+    {
+        if ($this->produitCommandes->removeElement($produitCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($produitCommande->getProduit() === $this) {
+                $produitCommande->setProduit(null);
+            }
+        }
 
         return $this;
     }
