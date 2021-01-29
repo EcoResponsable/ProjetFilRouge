@@ -32,7 +32,7 @@ class CommandeController extends AbstractController
             }
 
             foreach($panier as $p){
-                $prixTotal += $p['produit']->getPrixUnitaireHT() * $p['quantite'];
+                $prixTotal += ($p['produit']->getPrixUnitaireHT() + ($p['produit']->getPrixUnitaireHT() * $p['produit']->getTVA())) * $p['quantite'];
             }
        
         return $this->render('commande/index.html.twig', [
@@ -50,6 +50,7 @@ class CommandeController extends AbstractController
 
         $user = $this->getUser();
         $panier = $session->get('panier');
+        $prixTotal = 0;
         
         $commande = new Commande();
         $commande
@@ -63,6 +64,10 @@ class CommandeController extends AbstractController
             ->setProduit($rep->find($id))
             ->setCommande($commande);
             $em->persist($produitCommande);
+
+            $prod = $rep->find($id);
+            $prix = $prod->getPrixUnitaireHT() + ($prod->getPrixUnitaireHT() * $prod->getTVA());
+            $prixTotal += $prix;
         }
 
         $em->persist($commande);
@@ -71,7 +76,9 @@ class CommandeController extends AbstractController
 
 
         return $this->render('commande/commandeValidate.html.twig',[
-            'reference' => $commande->getReference()
+            'reference' => $commande->getReference(),
+            'commande' => $commande,
+            'total' => $prixTotal
             ]);
     }
 }

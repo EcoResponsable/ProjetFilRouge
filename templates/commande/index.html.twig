@@ -34,7 +34,7 @@
 					<ul class="list-group mb-3">
 						<li class="list-group-item d-flex justify-content-between">
 							<span>Total :</span>
-							<strong>{{ prixTotal }}€</strong>
+							<strong>{{ prixTotal|number_format(2) }}€</strong>
 						</li>
 						{% for p in panier %}
 						<li class="list-group-item d-flex justify-content-between lh-sm">
@@ -43,7 +43,7 @@
 					
 						<div>
 							<h6 class="my-0">{{p.produit.nom}}</h6>
-							<small class="text-muted">{{p.produit.prixUnitaireHT}}€/u</small>
+							<small class="text-muted">{{ ((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT)|number_format(2) }}€/u</small>
 						</div>
 						<div>
 							<h6>
@@ -52,7 +52,7 @@
 								<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info"><i class="fas fa-plus-circle"></i></a>
 							</h6>
 						</div>
-						<span class="text-muted">{{p.quantite * p.produit.prixUnitaireHT}}€</span>
+						<span class="text-muted">{{((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT)|number_format(2)}}€</span>
 						<a href="{{ path('panierDelete', {'id' : p.produit.id})}}" class="text-danger"><i class="fas fa-trash-alt"></i></a>
 						</li>
 						{% endfor %}
@@ -74,13 +74,13 @@
 			<span class="card-text text-muted lh-0" style="font-size: 12px; text-align: justify;">En passant votre commande, vous acceptez les Conditions générales de vente d’Amazon. Veuillez consulter notre Notice Protection de vos informations personnelles, notre Notice Cookies et notre Notice Annonces publicitaires basées sur vos centres d’intérêt.</span>
 			</div>
 			<ul class="list-group list-group-flush">
-			<li class="list-group-item">Articles : {{ prixTotal }}€</li>
+			<li class="list-group-item">Articles : {{ prixTotal|number_format(2) }}€</li>
 			<li class="list-group-item">Livraison : </li>
-			<li class="list-group-item"><h6>Total : {{ prixTotal }}€ </h6></li>
+			<li class="list-group-item"><h6>Total : {{ prixTotal|number_format(2) }}€ </h6></li>
 			</ul>
 			<div class="card-body">
 				<!-- a modifier -->
-			<a href="{{path('commandeValidate')}}" class="card-link btn btn-success">Passez au paiement</a>
+			<a href="{{path('commandeValidate')}}" class="card-link btn btn-success">Passer au paiement</a>
 			</div>
 		</div>
 	</div>

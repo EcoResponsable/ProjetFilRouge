@@ -30,7 +30,7 @@ class PanierController extends AbstractController
             }
 
             foreach($panier as $p){
-                $prixTotal += $p['produit']->getPrixUnitaireHT() * $p['quantite'];
+                $prixTotal += ($p['produit']->getPrixUnitaireHT() + ($p['produit']->getPrixUnitaireHT() * $p['produit']->getTVA())) * $p['quantite'];
             }
             
         

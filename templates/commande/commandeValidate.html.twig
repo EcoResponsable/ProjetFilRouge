@@ -1,10 +1,15 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<div>
-    <h4>Récapitulatif de la commande</h4>
-    <button type="button" class="btn btn-primary" id="checkout-button">Payez</button>
-</div>
+<div class="card alert alert-dark mx-auto mt-3" style="width: 35rem;">
+    <div class="card-body text-center">
+
+	  <h5 class="card-title">Finalisez votre achat</h5>
+	  <p>Commande n°{{reference}}</p>
+	  <h6>{{total|number_format(2)}}€</h6>
+      <button type="button" id="checkout-button" class="btn btn-success rounded-pill btn-lg m-3">Payer</button>
+    </div>
+  </div>
 {% endblock %}
 
 {% block javascripts %}
