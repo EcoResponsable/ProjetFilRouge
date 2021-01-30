@@ -46,6 +46,11 @@ class Commande
      */
     private $reference;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPayed;
+
     public function __construct()
     {
         $this->produitCommandes = new ArrayCollection();
@@ -131,6 +136,18 @@ class Commande
     public function setReference(string $reference): self
     {
         $this->reference = $reference;
+
+        return $this;
+    }
+
+    public function getIsPayed(): ?bool
+    {
+        return $this->isPayed;
+    }
+
+    public function setIsPayed(bool $isPayed): self
+    {
+        $this->isPayed = $isPayed;
 
         return $this;
     }

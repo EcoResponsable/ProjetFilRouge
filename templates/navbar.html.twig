@@ -25,8 +25,12 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{path('produitsUpdate', {'id':app.user.id}) }}"><i class="fas fa-2x fa-store"></i></a>
           </li>
+          {% elseif app.user.roles == ['ROLE_CLIENT'] %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{path('panier')}}"><i class="fas fa-2x fa-shopping-cart"></i></a>
+          </li>
           {% endif %}
-          {% else %}
+        {% else %}
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{path('panier')}}"><i class="fas fa-2x fa-shopping-cart"></i></a>
           </li>

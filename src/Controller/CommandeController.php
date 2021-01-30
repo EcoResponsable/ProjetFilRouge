@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Commande;
 use App\Entity\ProduitCommande;
+use App\Repository\CommandeRepository;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -57,6 +58,7 @@ class CommandeController extends AbstractController
         $commande = new Commande();
         $commande
         ->setClient($user)
+        ->setIsPayed(false)
         ->setReference(date('dmY').'-'.uniqid());
 
         foreach($panier as $id => $quantite){
@@ -68,7 +70,7 @@ class CommandeController extends AbstractController
             $em->persist($produitCommande);
 
             $prod = $rep->find($id);
-            $prix = $prod->getPrixUnitaireHT() + ($prod->getPrixUnitaireHT() * $prod->getTVA());
+            $prix = ($prod->getPrixUnitaireHT() + ($prod->getPrixUnitaireHT() * $prod->getTVA())) * $quantite;
             $prixTotal += $prix;
         }
 
@@ -82,5 +84,34 @@ class CommandeController extends AbstractController
             'commande' => $commande,
             'total' => $prixTotal
             ]);
+    }
+
+    /**
+     * @Route("/commandeSucces/{reference}", name="commandeSucces")
+     */
+    public function Succes($reference, CommandeRepository $repCommande,ProduitRepository $repProduit, EntityManagerInterface $em): Response
+    {
+
+        // permet de retirer les produits achetés des stocks
+        $commande = $repCommande->findOneBy(['reference' => $reference]);
+        $commande->setIsPayed(true);
+        $em->persist($commande);
+        $produitCommandes = $commande->getProduitCommandes();
+
+        foreach($produitCommandes as $produitCommande){
+
+            $quantite = $produitCommande->getQuantite();
+            $produit = $produitCommande->getProduit();
+            $produit->setStock($produit->getStock()-$quantite);
+            $em->persist($produit);
+
+        };
+
+        $em->flush();
+
+       
+        return $this->render('commande/commandeSucces.html.twig', [
+            
+        ]);
     }
 }
