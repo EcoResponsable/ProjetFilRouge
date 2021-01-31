@@ -2,7 +2,14 @@
 
 {% block body %}
 
-<button type="button" id="checkout-button">Checkout</button>
+<br>
+  <div class="card alert alert-primary mx-auto" style="width: 35rem;">
+    <div class="card-body text-center"> 
+      <h5 class="card-title">Finalisez la commande {{reference}}</h5>
+      <button type="button" id="checkout-button" class="btn btn-success btn-lg m-3">Payer</button>     
+    </div>
+  </div>
+
 
 {% endblock %}  
 

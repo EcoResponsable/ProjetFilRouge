@@ -53,7 +53,7 @@ class CommandeController extends AbstractController
         
         $commande = new Commande();
         $commande->setClient($user)
-        ->setReference(date('DmY').'-'.uniqid());
+        ->setReference(date('dmY').'-'.uniqid());
 
         foreach($panier as $id => $quantite){
             $produitCommande = new ProduitCommande();
@@ -69,7 +69,8 @@ class CommandeController extends AbstractController
         $session->set('panier', []);
         
        return $this->render('commande/commandeValidate.html.twig',[
-           'reference'=>$commande->getReference()
+           'reference'=>$commande->getReference(),
+           'commande'=>$commande
        ]);
     }
 }
