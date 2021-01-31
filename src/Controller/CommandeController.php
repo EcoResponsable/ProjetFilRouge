@@ -87,13 +87,14 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/commandeSucces/{reference}", name="commandeSucces")
+     * @Route("/commandeSucces", name="commandeSucces")
      */
-    public function Succes($reference, CommandeRepository $repCommande,ProduitRepository $repProduit, EntityManagerInterface $em): Response
+    public function Succes(CommandeRepository $repCommande,ProduitRepository $repProduit, EntityManagerInterface $em): Response
     {
 
         // permet de retirer les produits achetés des stocks
-        $commande = $repCommande->findOneBy(['reference' => $reference]);
+
+        $commande = $this->getUser()->getCommandes()->last();
         $commande->setIsPayed(true);
         $em->persist($commande);
         $produitCommandes = $commande->getProduitCommandes();
