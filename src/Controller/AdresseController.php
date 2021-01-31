@@ -99,4 +99,21 @@ class AdresseController extends AbstractController
      
         return $this->redirectToRoute('adresse');
     }
+
+    /**
+     * @Route("/adresseLivraison{id}", name="adresseLivraison")
+     */
+    public function adresseLivraison(Adresserepository $rep, $id): Response
+    {
+        $user = $this->getUser();
+        $adresses = $user->getAdresses();
+        $adresseLivraison = $rep->Find($id);
+      
+
+        return $this->redirectToRoute('commande', [
+            'adresseLivraison' => $adresseLivraison,
+            'adresses' => $adresses,
+        ]);
+    }
+    
 }

@@ -14,10 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommandeController extends AbstractController
 {
     /**
-     * @Route("/clientcommande", name="commande")
+     * @Route("/clientcommande{adresseLivraison?}", name="commande")
      */
-    public function index(SessionInterface $session, ProduitRepository $rep): Response
+    public function index(SessionInterface $session, ProduitRepository $rep, $adresseLivraison): Response
     {
+
         $user = $this->getUser();
         $adresses = $user->getAdresses();
         $produits = $session->get('panier', []);
@@ -53,7 +54,8 @@ class CommandeController extends AbstractController
         return $this->render('commande/index.html.twig', [
             'adresses' =>$adresses,
             'panier' => $panier,
-            'prixTotal' => $prixTotal
+            'prixTotal' => $prixTotal,
+            'adresseLivraison'=>$adresseLivraison
         ]);
     }
 

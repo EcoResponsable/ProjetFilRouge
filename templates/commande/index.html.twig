@@ -4,103 +4,112 @@
 {% endblock %}
 
 {% block body %}
-<div class="row">
-	<div class="col-9">
-		<ul class="list-group">
+	<div class="row">
+		<div class="col-9">
+			<ul class="list-group">
 
-			<h1>Ma commande</h1>
+				<h1>Ma commande</h1>
 
 
-			<li class="list-group-item">
-					<h6>Adresse par défaut</h6>
+				<li class="list-group-item">
+
 					{% for adresse in adresses %}
 						{% if adresse.isDefault == true %}
+							{% if adresseLivraison %}
+								<div class="alert alert-success" role="alert">Adresse de livraison selectionnée:
+									<p>
+										<b>{{adresseLivraison}}</b>
+									</p>
+								</div>
+							{% endif %}
+							<h6>Adresse par défaut</h6>
 							<p>{{adresse}}</p>
+							<a href="{{path('adresseLivraison', {'id': adresse.id})}}">Utiliser cette adresse</a>
+						{% else %}
+							<h6>Vos adresses enregistrées:</h6>
+							<p>{{adresse}}</p>
+							<a href="{{path('adresseLivraison', {'id': adresse.id})}}">Utiliser cette adresse</a>
 						{% endif %}
+						
+
 					{% endfor %}
-					<a href="#" class="btn btn-primary">Choisir une autre adresse</a>
+
 				</li>
 
-			
 
 				<li class="list-group-item">
 					<h6>Moyens de payement</h6>
 				</li>
-			<li class="list-group-item">
+				<li class="list-group-item">
 
-				<div class="row">
-				<div class="col-6">
-					<h6>Récapitulatif de la commande</h6>
-					<ul class="list-group mb-3">
-						<li class="list-group-item d-flex justify-content-between">
-							<span>Total :</span>
-							<strong>{{ prixTotal }}€</strong>
-						</li>
-						{% for p in panier %}
-						<li class="list-group-item d-flex justify-content-between lh-sm">
-						
-							<img class="img-fluid" src="{{asset(p.produit.image)}}" alt="..." height="90px" width="90px">
-					
-						<div>
-							<h6 class="my-0">{{p.produit.nom}}</h6>
-							<small class="text-muted">{{p.produit.prixUnitaireHT}}€/u</small>
+					<div class="row">
+						<div class="col-6">
+							<h6>Récapitulatif de la commande</h6>
+							<ul class="list-group mb-3">
+								<li class="list-group-item d-flex justify-content-between">
+									<span>Total :</span>
+									<strong>{{ prixTotal }}€</strong>
+								</li>
+								{% for p in panier %}
+									<li class="list-group-item d-flex justify-content-between lh-sm">
+
+										<img class="img-fluid" src="{{asset(p.produit.image)}}" alt="..." height="90px" width="90px">
+
+										<div>
+											<h6 class="my-0">{{p.produit.nom}}</h6>
+											<small class="text-muted">{{p.produit.prixUnitaireHT}}€/u</small>
+										</div>
+										<div>
+											<h6>
+												<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'moins'})}}" class="text-info">
+													<i class="fas fa-minus-circle"></i>
+												</a>
+												{{p.quantite}}
+												<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info">
+													<i class="fas fa-plus-circle"></i>
+												</a>
+											</h6>
+										</div>
+										<span class="text-muted">{{p.quantite * p.produit.prixUnitaireHT}}€</span>
+										<a href="{{ path('panierDelete', {'id' : p.produit.id})}}" class="text-danger">
+											<i class="fas fa-trash-alt"></i>
+										</a>
+									</li>
+								{% endfor %}
+
+
+							</ul>
 						</div>
-						<div>
-							<h6>
-								<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'moins'})}}" class="text-info"><i class="fas fa-minus-circle"></i></a>
-								{{p.quantite}}
-								<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info"><i class="fas fa-plus-circle"></i></a>
-							</h6>
+
+						<div class="col-6">
+							<h6>moyens de livraison</h6>
 						</div>
-						<span class="text-muted">{{p.quantite * p.produit.prixUnitaireHT}}€</span>
-						<a href="{{ path('panierDelete', {'id' : p.produit.id})}}" class="text-danger"><i class="fas fa-trash-alt"></i></a>
-						</li>
-						{% endfor %}
-				
-						
-					</ul>
+					</div>
+
+				</li>
+
+			</ul>
+		</div>
+		<div class="col-3">
+			<div class="card" style="width: 18rem;">
+				<div class="card-body">
+					<span class="card-text text-muted lh-0" style="font-size: 12px; text-align: justify;">En passant votre commande, vous acceptez les Conditions générales de vente d’Amazon. Veuillez consulter notre Notice Protection de vos informations personnelles, notre Notice Cookies et notre Notice Annonces publicitaires basées sur vos centres d’intérêt.</span>
 				</div>
-
-				<div class="col-6"><h6>moyens de livraison</h6></div>
-			</div>
-
-			</li>
-			
-		</ul>
-	</div>
-	<div class="col-3">
-<<<<<<< HEAD
-		<div class="card" style="width: 18rem;">
-=======
-		<div class="card sticky-top" style="width: 18rem;">
->>>>>>> Mehdi
-			<div class="card-body">
-			<span class="card-text text-muted lh-0" style="font-size: 12px; text-align: justify;">En passant votre commande, vous acceptez les Conditions générales de vente d’Amazon. Veuillez consulter notre Notice Protection de vos informations personnelles, notre Notice Cookies et notre Notice Annonces publicitaires basées sur vos centres d’intérêt.</span>
-			</div>
-			<ul class="list-group list-group-flush">
-<<<<<<< HEAD
-			<li class="list-group-item">Articles : {{ prixTotal }}€</li>
-			<li class="list-group-item">Livraison : </li>
-			<li class="list-group-item"><h6>Total : {{ prixTotal }}€ </h6></li>
-			</ul>
-			<div class="card-body">
-			<a href="{{path('commandeValidate')}}" class="card-link btn btn-success">Passez la commande</a>
-=======
-			<li class="list-group-item">Articles : {{ prixTotal|number_format(2) }}€</li>
-			<li class="list-group-item">Livraison : </li>
-			<li class="list-group-item"><h6>Total : {{ prixTotal|number_format(2) }}€ </h6></li>
-			</ul>
-			<div class="card-body">
-				<!-- a modifier -->
-			<a href="{{path('commandeValidate')}}" class="card-link btn btn-success">Passer au paiement</a>
->>>>>>> Mehdi
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">Articles :
+						{{ prixTotal }}€</li>
+					<li class="list-group-item">Livraison :
+					</li>
+					<li class="list-group-item">
+						<h6>Total :
+							{{ prixTotal }}€
+						</h6>
+					</li>
+				</ul>
+				<div class="card-body">
+					<a href="{{path('commandeValidate')}}" class="card-link btn btn-success">Passez la commande</a>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<<<<<<< HEAD
 {% endblock %}
-	
-=======
-{% endblock %}
->>>>>>> Mehdi
