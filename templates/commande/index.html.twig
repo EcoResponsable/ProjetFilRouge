@@ -69,20 +69,38 @@
 		</ul>
 	</div>
 	<div class="col-3">
+<<<<<<< HEAD
 		<div class="card" style="width: 18rem;">
+=======
+		<div class="card sticky-top" style="width: 18rem;">
+>>>>>>> Mehdi
 			<div class="card-body">
 			<span class="card-text text-muted lh-0" style="font-size: 12px; text-align: justify;">En passant votre commande, vous acceptez les Conditions générales de vente d’Amazon. Veuillez consulter notre Notice Protection de vos informations personnelles, notre Notice Cookies et notre Notice Annonces publicitaires basées sur vos centres d’intérêt.</span>
 			</div>
 			<ul class="list-group list-group-flush">
+<<<<<<< HEAD
 			<li class="list-group-item">Articles : {{ prixTotal }}€</li>
 			<li class="list-group-item">Livraison : </li>
 			<li class="list-group-item"><h6>Total : {{ prixTotal }}€ </h6></li>
 			</ul>
 			<div class="card-body">
 			<a href="{{path('commandeValidate')}}" class="card-link btn btn-success">Passez la commande</a>
+=======
+			<li class="list-group-item">Articles : {{ prixTotal|number_format(2) }}€</li>
+			<li class="list-group-item">Livraison : </li>
+			<li class="list-group-item"><h6>Total : {{ prixTotal|number_format(2) }}€ </h6></li>
+			</ul>
+			<div class="card-body">
+				<!-- a modifier -->
+			<a href="{{path('commandeValidate')}}" class="card-link btn btn-success">Passer au paiement</a>
+>>>>>>> Mehdi
 			</div>
 		</div>
 	</div>
 </div>
+<<<<<<< HEAD
 {% endblock %}
 	
+=======
+{% endblock %}
+>>>>>>> Mehdi

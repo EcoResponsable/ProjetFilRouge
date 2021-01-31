@@ -35,6 +35,21 @@ class CommandeController extends AbstractController
                 $prixTotal += $p['produit']->getPrixUnitaireHT() * $p['quantite'];
             }
        
+        $produits = $session->get('panier', []);
+            $prixTotal = 0;
+            $panier = [];
+
+            foreach($produits as $id => $quantite){
+                $panier[] = [
+                    'produit' => $rep->find($id),
+                    'quantite' => $quantite
+                ];
+            }
+
+            foreach($panier as $p){
+                $prixTotal += ($p['produit']->getPrixUnitaireHT() + ($p['produit']->getPrixUnitaireHT() * $p['produit']->getTVA())) * $p['quantite'];
+            }
+       
         return $this->render('commande/index.html.twig', [
             'adresses' =>$adresses,
             'panier' => $panier,

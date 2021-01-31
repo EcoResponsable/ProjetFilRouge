@@ -19,7 +19,7 @@
       
           <div>
             <h6 class="my-0">{{p.produit.nom}}</h6>
-            <small class="text-muted">{{p.produit.prixUnitaireHT}}€/u</small>
+            <small class="text-muted">{{((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT)|number_format(2)}}€/u</small>
           </div>
           <div>
               <h6>
@@ -28,14 +28,14 @@
                 <a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info "><i class="fas fa-plus-circle"></i></a>
             </h6>
           </div>
-          <span class="text-muted">{{p.quantite * p.produit.prixUnitaireHT}}€</span>
+          <span class="text-muted">{{((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT)|number_format(2)}}€</span>
           <a href="{{ path('panierDelete', {'id' : p.produit.id})}}" class="text-danger"><i class="fas fa-trash-alt"></i></a>
         </li>
         {% endfor %}
 
         <li class="list-group-item d-flex justify-content-between">
           <span>Total :</span>
-          <strong>{{ prixTotal }}€</strong>
+          <strong>{{ prixTotal|number_format(2) }}€</strong>
         </li>
       </ul>
       <a href="#"><button type="button" class="btn btn-outline-danger">Retour aux articles</button></a>

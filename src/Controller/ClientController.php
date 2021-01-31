@@ -18,8 +18,11 @@ class ClientController extends AbstractController
      */
     public function index(): Response
     {
+
+        $commandes = $this->getUser()->getCommandes();
         return $this->render('client/infoClient.html.twig', [
             'role' => 'client',
+            'commandes' => $commandes
         ]);
     }
 
@@ -55,5 +58,36 @@ class ClientController extends AbstractController
             'form' => $form->createView()
         ]);
 
+    }
+
+
+    /**
+     * @Route("/clientCommandes", name="clientCommandes")
+     */
+    public function commandes(): Response
+    {
+
+        $commandes = $this->getUser()->getCommandes();
+        $cm = [];
+        
+        foreach($commandes as $commande){
+            $produits = [];
+
+            $pcs = $commande->getProduitCommandes();
+
+            foreach($pcs as $pc){
+
+                $produits[] = $pc->getProduit();
+
+            }
+
+            $cm[] = $produits;
+
+        }
+
+        return $this->render('client/clientCommandes.html.twig', [
+            'role' => 'client',
+            'commandes' => $commandes
+        ]);
     }
 }
