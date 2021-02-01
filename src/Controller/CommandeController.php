@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Adresse;
 use App\Entity\Commande;
 use App\Entity\ProduitCommande;
+use App\Repository\AdresseRepository;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,26 +18,11 @@ class CommandeController extends AbstractController
     /**
      * @Route("/clientcommande{adresseLivraison?}", name="commande")
      */
-    public function index(SessionInterface $session, ProduitRepository $rep, $adresseLivraison): Response
+    public function index(SessionInterface $session, ProduitRepository $rep, $adresseLivraison, AdresseRepository $adresseRepository): Response
     {
 
         $user = $this->getUser();
         $adresses = $user->getAdresses();
-        $produits = $session->get('panier', []);
-            $prixTotal = 0;
-            $panier = [];
-
-            foreach($produits as $id => $quantite){
-                $panier[] = [
-                    'produit' => $rep->find($id),
-                    'quantite' => $quantite
-                ];
-            }
-
-            foreach($panier as $p){
-                $prixTotal += $p['produit']->getPrixUnitaireHT() * $p['quantite'];
-            }
-       
         $produits = $session->get('panier', []);
             $prixTotal = 0;
             $panier = [];
@@ -67,6 +54,7 @@ class CommandeController extends AbstractController
 
         $user = $this->getUser();
         $panier = $session->get('panier');
+        $prixTotal = 0;
         
         $commande = new Commande();
         $commande->setClient($user)
@@ -79,6 +67,10 @@ class CommandeController extends AbstractController
             ->setProduit($rep->find($id))
             ->setCommande($commande);
             $em->persist($produitCommande);
+
+            $prod = $rep->find($id);
+            $prix = $prod->getPrixUnitaireHT() + ($prod->getPrixUnitaireHT() * $prod->getTVA());
+            $prixTotal += $prix;
         }
 
         $em->persist($commande);
@@ -86,8 +78,9 @@ class CommandeController extends AbstractController
         $session->set('panier', []);
         
        return $this->render('commande/commandeValidate.html.twig',[
-           'reference'=>$commande->getReference(),
-           'commande'=>$commande
+            'reference' => $commande->getReference(),
+            'commande' => $commande,
+            'total' => $prixTotal
        ]);
     }
 }

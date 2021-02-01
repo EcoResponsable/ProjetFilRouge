@@ -27,9 +27,9 @@ class AdresseController extends AbstractController
     }
 
     /**
-     * @Route("/adresseAdd", name="adresseAdd")
+     * @Route("/adresseAdd{id?}", name="adresseAdd")
      */
-    public function add(Request $request, EntityManagerInterface $em): Response
+    public function add(Request $request, EntityManagerInterface $em, $id): Response
     {
 
 
@@ -44,8 +44,12 @@ class AdresseController extends AbstractController
             $em->persist($adresse);
             $em->flush();
             dump($user);
+                if($id == null){
+                     return $this->redirectToRoute('adresse');
+                 }else{
 
-            return $this->redirectToRoute('adresse');
+                    return $this->redirectToRoute('commande');
+                 }
         }
 
         return $this->render('adresse/adresseAdd.html.twig', [
