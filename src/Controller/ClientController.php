@@ -40,7 +40,7 @@ class ClientController extends AbstractController
         $form->handleRequest($req);
 
             if($form->isSubmitted() && $form->isValid()){
-                                
+         
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
                         $user,

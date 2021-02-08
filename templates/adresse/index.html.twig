@@ -25,6 +25,9 @@
 								<i class="far fa-star "></i>
 							</a>
 						{% endif %}
+						<a href="{{path('adresseUpdate', {'id': adresse.id})}}">
+							<i class="far fa-edit"></i>
+						</a>
 						<a href="{{path('adresseDelete', {'id':adresse.id}) }}">
 							<i class=" px-2 fas fa-trash-alt text-danger"></i>
 						</a>

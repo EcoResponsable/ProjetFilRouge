@@ -59,9 +59,9 @@ class AdresseController extends AbstractController
     }
 
      /**
-     * @Route("/adresseDelete{id}", name="adresseDelete")
+     * @Route("/adresseDelete{id}/{route?}", name="adresseDelete")
      */
-    public function adresseDelete($id, AdresseRepository $rep, EntityManagerInterface $em): Response
+    public function adresseDelete($id, AdresseRepository $rep, EntityManagerInterface $em, $route): Response
     {
 
         $adresse = $rep->find($id);
@@ -69,8 +69,14 @@ class AdresseController extends AbstractController
         $em->remove($adresse);
         $em->flush();
 
+        if($route == null){
 
-        return $this->redirectToRoute('adresse');
+            return $this->redirectToRoute('adresse');
+            
+        }else{
+            
+            return $this->redirectToRoute('commande');
+    }
     }
 
     /**
@@ -118,6 +124,38 @@ class AdresseController extends AbstractController
         return $this->redirectToRoute('commande', [
             'adresseLivraison' => $adresseLivraison,
             'adresses' => $adresses,
+        ]);
+    }
+
+
+     /**
+     * @Route("/adresseUpdate{id}/{route?}", name="adresseUpdate")
+     */
+    public function adresseUpdate(Adresserepository $rep, $id, Request $request, EntityManagerInterface $em, $route ): Response
+    {
+        $adresse = $rep->find($id);
+        $form = $this->createForm(AdresseFormType::class,$adresse);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            
+            $user = $this->getUser();
+           
+            $em->persist($adresse);
+            $em->flush();
+            dump($user);
+
+                if($route == null){
+
+                     return $this->redirectToRoute('adresse');
+                 }else{
+
+                    return $this->redirectToRoute('commande');
+                 }
+        }
+
+        return $this->render('adresse/adresseAdd.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
     
