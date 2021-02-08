@@ -46,6 +46,11 @@ class Commande
      */
     private $reference;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Livreur::class, inversedBy="commande")
+     */
+    private $livreur;
+
     
     public function __construct()
     {
@@ -132,6 +137,18 @@ class Commande
     public function setReference(?string $reference): self
     {
         $this->reference = $reference;
+
+        return $this;
+    }
+
+    public function getLivreur(): ?Livreur
+    {
+        return $this->livreur;
+    }
+
+    public function setLivreur(?Livreur $livreur): self
+    {
+        $this->livreur = $livreur;
 
         return $this;
     }

@@ -111,20 +111,33 @@
 										</a>
 									</li>
 								{% endfor %}
-
-
 							</ul>
 						</div>
 
-						<div class="col-6">
+						<div class="col-5">
 							<h6>moyens de livraison</h6>
+								<ul class="list-group mb-3">								
+									<table>
+											<tr>
+												<td>
+													{{form_start(livreurForm)}}
+													{{form_row(livreurForm.nom)}}
+												</td>
+											</tr>
+										
+										
+										</table>
+								</ul>
 						</div>
 					</div>
-
 				</li>
+
 
 			</ul>
 		</div>
+
+
+
 		<div class="col-3">
 
 			<div class="card sticky-top" style="width: 18rem;">
@@ -135,6 +148,11 @@
 					<li class="list-group-item">Articles :
 						{{ prixTotal|number_format(2) }}€</li>
 					<li class="list-group-item">Livraison :
+						{% for livreur in livreurs %}
+							{% if livreur %}
+								{{livreur.tarif}}
+							{% endif %}
+						{% endfor %}
 					</li>
 					<li class="list-group-item">
 						<h6>Total :
@@ -142,8 +160,20 @@
 						</h6>
 					</li>
 				</ul>
-				<div class="card-body">
-					<a href="{{path('commandeValidate')}}" class="card-link btn btn-success">Passer la commande</a>
+				<div class="card-body">	
+					{% if panier is empty %}
+						{{form_row(livreurForm.submit,{ 
+							'attr':{'disabled':true,
+							'class': 'btn btn-danger'}
+						} )}}
+				
+					{% else %}
+						{{form_row(livreurForm.submit,{
+							'attr':{'class': 'btn btn-success'}
+
+						} )}}
+					{% endif %}		
+									{{form_end(livreurForm)}}
 				</div>
 			</div>
 		</div>

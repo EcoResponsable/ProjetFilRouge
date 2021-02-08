@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Adresse;
 use App\Entity\Client;
-use App\Entity\Panier;
+use App\Entity\Livreur;
 use App\Entity\Produit;
 use App\Entity\Vendeur;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -101,6 +101,18 @@ class AppFixtures extends Fixture
             $manager->persist($client);
  
          }
+
+         $l1 = new Livreur();
+        $l1->setNom('Livreur1')->setDescription(' Modi optio delectus officia deleniti possimus consequuntur? Ipsa delectus quam eos, ipsum distinctio aliquid dolores ex corporis voluptate quis consequatur inventore maxime.')->setTarif(5);
+        $manager->persist($l1);
+
+        $l2 = new Livreur();
+        $l2->setNom('Livreur2')->setDescription(' Animi facilis facere unde debitis voluptatibus rem repellendus quasi esse error veritatis, blanditiis harum, magnam necessitatibus recusandae fugiat iusto sapiente. Deserunt, adipisci.')->setTarif(2);
+        $manager->persist($l2);
+
+        $l3 = new Livreur();
+        $l3->setNom('Livreur3')->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur consequatur officiis, cum necessitatibus maxime animi possimus ipsa sapiente rerum mollitia explicabo voluptas dignissimos, eius dolor deserunt ea sit, in delectus.')->setTarif(10);
+        $manager->persist($l3);
 
         $manager->flush();
     }
