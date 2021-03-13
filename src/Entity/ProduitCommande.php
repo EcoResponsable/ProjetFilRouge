@@ -38,6 +38,8 @@ class ProduitCommande
      */
     private $commande;
 
+  
+
     public function getId(): ?int
     {
         return $this->id;
@@ -78,4 +80,6 @@ class ProduitCommande
 
         return $this;
     }
+
+   
 }

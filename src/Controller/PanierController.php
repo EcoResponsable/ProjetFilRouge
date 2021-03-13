@@ -65,19 +65,26 @@ class PanierController extends AbstractController
     }
 
     /**
-     * @Route("/panierDelete{id}", name="panierDelete")
+     * @Route("/panierDelete{id?}", name="panierDelete")
      */
     public function panierDelete(SessionInterface $session,$id, Request $request): Response
     {
 
         $panier = $session->get('panier',[]);
 
-        unset($panier[$id]);
-        
-        $session->set('panier',$panier);
-
-        return $this->redirect($request->headers->get('referer'));
+        if ($id){
+            unset($panier[$id]);
+            $session->set('panier',$panier);
+            return $this->redirect($request->headers->get('referer'));
+        }else{
+            $session->set('panier', []); 
+            return $this->redirectToRoute('panier');
+        } 
 
     }
+
+  
+
+
 
 }

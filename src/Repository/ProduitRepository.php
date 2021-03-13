@@ -19,6 +19,27 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
+    public function findBest()
+    {
+        return $this->createQueryBuilder('produits')
+        ->orderBy('produits.nbrVendu', 'DESC')
+        ->setMaxResults(5)
+        ->getQuery()
+        ->getResult()
+    ;
+    }
+    
+    public function findBestVendeur()
+    {
+        return $this->createQueryBuilder('produits')
+        ->groupBy('produits.vendeur')
+        ->orderBy('SUM(produits.nbrVendu)', 'DESC')
+        ->setMaxResults(5)
+        ->getQuery()
+        ->getResult()
+    ;
+    }
+
     // /**
     //  * @return Produit[] Returns an array of Produit objects
     //  */

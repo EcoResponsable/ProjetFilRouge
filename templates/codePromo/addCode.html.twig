@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CodePromoController!{% endblock %}
+
+{% block body %}
+
+{{ form_start(Form) }}
+
+  
+{{ form_rest(Form)}} 
+
+<br>       
+<button type="submit" class="btn btn-dark">Enregistrer</button>
+{{ form_end(Form) }}
+{% endblock %}

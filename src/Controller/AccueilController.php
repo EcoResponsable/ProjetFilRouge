@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Client;
-use App\Entity\Connexion;
-use App\Entity\Vendeur;
+use App\Repository\ProduitRepository;
+use App\Repository\VendeurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,51 +14,25 @@ class AccueilController extends AbstractController
     /**
      * @Route("/", name="accueil")
      */
-    public function index(EntityManagerInterface $em): Response
+    public function index(EntityManagerInterface $em, ProduitRepository $repProduit): Response
     {
+        $produits = $repProduit->findBest();
+        $vendeurs = [];
 
-        // bonjour
+        $groupeProduits = $repProduit->findBestVendeur();
+        
+        foreach ($groupeProduits as $p){
+
+            $vendeurs[] = $p->getVendeur();
+
+        }
+ 
         return $this->render('accueil/index.html.twig', [
-            'controller_name' => 'AccueilController',
+            'produits' => $produits,
+            'vendeurs' => $vendeurs,
+
         ]);
     }
 
-    /**
-     * @Route("/client", name="accueilclient")
-     */
-    public function indexclient(EntityManagerInterface $em): Response
-    {
-        return $this->render('accueil/index.html.twig', [
-            'controller_name' => 'AccueilController',
-        ]);
-    }
-
-    /**
-     * @Route("/vendeur", name="accueilvendeur")
-     */
-    public function indexvendeur(EntityManagerInterface $em): Response
-    {
-        return $this->render('accueil/index.html.twig', [
-            'controller_name' => 'AccueilController',
-        ]);
-    }
-
-    /**
-     * @Route("/succes", name="succes")
-     */
-    public function succes(EntityManagerInterface $em): Response
-    {
-        $connexion = new Connexion();
-
-        $user = $this->getUser();
-        $connexion->setUser($user);
-        $date = new \DateTime();
-        $date->modify('+ 1 hour');
-        $connexion->setDateConnexion($date);
-        $em->persist($connexion);
-        $em->flush();
-
-        return $this->render('accueil/succes.html.twig', [
-        ]);
-    }
+   
 }

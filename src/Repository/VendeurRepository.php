@@ -19,6 +19,16 @@ class VendeurRepository extends ServiceEntityRepository
         parent::__construct($registry, Vendeur::class);
     }
 
+
+    // public function findBest()
+    // {
+    //     return $this->createQueryBuilder('p')
+    //     ->orderBy('p.nbrVendu', 'DESC')
+    //     ->setMaxResults(5)
+    //     ->getQuery()
+    //     ->getResult()
+    // ;
+    // }
     // /**
     //  * @return Vendeur[] Returns an array of Vendeur objects
     //  */

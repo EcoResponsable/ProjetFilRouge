@@ -38,8 +38,9 @@
           <strong>{{prixTotal|number_format(2)}}€</strong>
         </li>
       </ul>
-      <a href="#"><button type="button" class="btn btn-outline-danger">Retour aux articles</button></a>
+      <a href="{{path('allVendeurs')}}"><button type="button" class="btn btn-outline-primary">Retour aux vendeurs</button></a>
       <a href="{{path('commande')}}"><button type="button" class="btn btn-success" {{panier|length == 0 ? 'disabled'}}>Valider mon panier</button></a>
+      <a href="{{path('panierDelete')}}"><button type="button" class="btn btn-outline-danger">Vider mon panier</button></a>
     </div>
 </div>
 {% endblock %}

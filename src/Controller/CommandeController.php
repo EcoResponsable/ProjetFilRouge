@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+
+
+
+use \Mailjet\Resources;
 use App\Entity\Adresse;
 use App\Entity\Commande;
 use App\Entity\ProduitCommande;
@@ -15,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-
 
 class CommandeController extends AbstractController
 {
@@ -47,18 +50,18 @@ class CommandeController extends AbstractController
             
             if($livreurForm->isSubmitted() && $livreurForm->isSubmitted()){
                 
-
-                $livreur = $session->get('livreur', []);
-                $prixLivreur = $livreurForm->getData(); 
-                $session->set('livreur',$prixLivreur['nom']);
-                
-             
+                $data = $livreurForm->get('nom')->getData();
+                $livreurId = $data->getId();
+                $session->set('livreur',$livreurId);
+                            
                 return $this->redirectToRoute('commandeValidate');
             }
            
 
             foreach($panier as $p){
+
                 $prixTotal += ($p['produit']->getPrixUnitaireHT() + ($p['produit']->getPrixUnitaireHT() * $p['produit']->getTVA())) * $p['quantite'];
+
             }
        
         return $this->render('commande/index.html.twig', [
@@ -75,12 +78,14 @@ class CommandeController extends AbstractController
     /**
      * @Route("/commandeValidate/", name="commandeValidate")
      */
-    public function commandeValidate(SessionInterface $session, ProduitRepository $rep, EntityManagerInterface $em)
+    public function commandeValidate(SessionInterface $session, ProduitRepository $rep, EntityManagerInterface $em, LivreurRepository $repLivreur)
     {
         $user = $this->getUser();
         $panier = $session->get('panier');
-        $livreur = $session->get('livreur');
-        
+        $livreurId = $session->get('livreur');
+        $livreur = $repLivreur->find($livreurId);
+    
+ 
         $prixTotal = 0;
 
 
@@ -89,31 +94,45 @@ class CommandeController extends AbstractController
 
        
         $commande = new Commande();
-        $commande->setClient($user)
+        $commande
+        ->setClient($user)
+        ->setLivreur($livreur)
         ->setReference(date('dmY').'-'.uniqid());
 
         foreach($panier as $id => $quantite){
+
             $produitCommande = new ProduitCommande();
             $produitCommande
             ->setQuantite($quantite)
             ->setProduit($rep->find($id))
             ->setCommande($commande);
+            
             $em->persist($produitCommande);
 
             $prod = $rep->find($id);
-            $prix = $prod->getPrixUnitaireHT() + ($prod->getPrixUnitaireHT() * $prod->getTVA());
-            $prixTotal += $prix + $prixLivraison;
+            $prod->setNbrVendu($prod->getNbrVendu()+ $quantite);
+            $em->persist($prod);
+
+            $prix = ($prod->getPrixUnitaireHT() + ($prod->getPrixUnitaireHT() * $prod->getTVA()));
+            $prixTotal += $prix;
+            
         }
+        $prixTotal += $prixLivraison;
+
+       
 
         $em->persist($commande);
         $em->flush();
-        // $session->set('panier', []);  REINITIALISATION DU PANIER
-        
+
+       
        return $this->render('commande/commandeValidate.html.twig',[
             'reference' => $commande->getReference(),
             'commande' => $commande,
-            'total' => $prixTotal
+            'total' => $prixTotal,
+        
        ]);
     }
+
+
 
 }

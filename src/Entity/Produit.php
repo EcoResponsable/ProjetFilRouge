@@ -23,6 +23,7 @@ class Produit
         $this->setTVA(0.055);
         $this->produitPaniers = new ArrayCollection();
         $this->produitCommandes = new ArrayCollection();
+        $this->setNbrVendu(0);
     }
     /**
      * @ORM\Id
@@ -80,6 +81,11 @@ class Produit
      * @ORM\OneToMany(targetEntity=ProduitCommande::class, mappedBy="produit")
      */
     private $produitCommandes;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbrVendu;
 
     public function getId(): ?int
     {
@@ -220,6 +226,18 @@ class Produit
                 $produitCommande->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNbrVendu(): ?int
+    {
+        return $this->nbrVendu;
+    }
+
+    public function setNbrVendu(int $nbrVendu): self
+    {
+        $this->nbrVendu = $nbrVendu;
 
         return $this;
     }

@@ -18,6 +18,7 @@ class Vendeur extends User
         $this->setRoles(['ROLE_VENDEUR']);
         $this->produits = new ArrayCollection();
         $this->adresses = new ArrayCollection();
+        $this->codePromos = new ArrayCollection();
     }
 
     /**
@@ -61,6 +62,11 @@ class Vendeur extends User
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CodePromo::class, mappedBy="relation", orphanRemoval=true)
+     */
+    private $codePromos;
 
     public function getId(): ?int
     {
@@ -165,6 +171,36 @@ class Vendeur extends User
     public function setDescription(string $description): ?self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CodePromo[]
+     */
+    public function getCodePromos(): Collection
+    {
+        return $this->codePromos;
+    }
+
+    public function addCodePromo(CodePromo $codePromo): self
+    {
+        if (!$this->codePromos->contains($codePromo)) {
+            $this->codePromos[] = $codePromo;
+            $codePromo->setvendeurId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCodePromo(CodePromo $codePromo): self
+    {
+        if ($this->codePromos->removeElement($codePromo)) {
+            // set the owning side to null (unless already changed)
+            if ($codePromo->getvendeurId() === $this) {
+                $codePromo->setvendeurId(null);
+            }
+        }
 
         return $this;
     }
