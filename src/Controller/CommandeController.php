@@ -7,10 +7,13 @@ namespace App\Controller;
 
 use \Mailjet\Resources;
 use App\Entity\Adresse;
+use App\Entity\CodePromo;
 use App\Entity\Commande;
 use App\Entity\ProduitCommande;
+use App\Form\CodepromoSearchType;
 use App\Form\LivreurformType;
 use App\Repository\AdresseRepository;
+use App\Repository\CodePromoRepository;
 use App\Repository\LivreurRepository;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,54 +28,117 @@ class CommandeController extends AbstractController
     /**
      * @Route("/clientcommande{adresseLivraison?}", name="commande")
      */
-    public function index(SessionInterface $session, ProduitRepository $rep, $adresseLivraison, LivreurRepository $repLivreur,  Request $req): Response
+    public function index(SessionInterface $session, ProduitRepository $rep, $adresseLivraison, LivreurRepository $repLivreur, CodePromoRepository $repCode, Request $req): Response
     {
 
         $user = $this->getUser();
-
         $adresses = $user->getAdresses();
         $livreur = $repLivreur->findAll();
-   
+        $codePromo = $repCode->findAll();
+        
+        
+
+        
         
         $produits = $session->get('panier', []);
-            $prixTotal = 0;
-            $panier = [];
+        $prixTotal = 0;
+        $vendeurId=[];
+        $panier = [];
+        
+        foreach($produits as $id => $quantite){
+            $panier[] = [
+                'produit' => $rep->find($id),
+                'quantite' => $quantite
+            ];
+        }
 
-            foreach($produits as $id => $quantite){
-                $panier[] = [
-                    'produit' => $rep->find($id),
-                    'quantite' => $quantite
-                ];
-            }
 
+  
+        //Partie du formulaire du livreur
             $livreurForm = $this->createForm(LivreurformType::class, $livreur);
             $livreurForm->handleRequest($req);
             
-            if($livreurForm->isSubmitted() && $livreurForm->isSubmitted()){
+           
+            if ($livreurForm->isSubmitted() && $livreurForm->isValid()){ 
                 
                 $data = $livreurForm->get('nom')->getData();
                 $livreurId = $data->getId();
-                $session->set('livreur',$livreurId);
-                            
+                $session->set('livreur', $livreurId);
+                
                 return $this->redirectToRoute('commandeValidate');
+                
             }
-           
+
 
             foreach($panier as $p){
-
+    
                 $prixTotal += ($p['produit']->getPrixUnitaireHT() + ($p['produit']->getPrixUnitaireHT() * $p['produit']->getTVA())) * $p['quantite'];
-
+    
             }
+        //*********************************
+         
+        // Partie du formulaire de code promo
+        
+
+        $codeForm = $this->createForm(CodepromoSearchType::class, $codePromo);
+        $codeForm->handleRequest($req);
        
-        return $this->render('commande/index.html.twig', [
-            'adresses' =>$adresses,
-            'panier' => $panier,
-            'prixTotal' => $prixTotal,
-            'adresseLivraison'=>$adresseLivraison,
-            'livreurs'=>$livreur,
-            'livreurForm'=>$livreurForm->createView()
+
+         if ($codeForm->isSubmitted()) {
+
+            $data = $codeForm->get('nom')->getData();// on recupere l'entree du formulaire
             
-        ]);
+            foreach ($panier as $p){
+                  foreach($p as $vendeur){
+                    $data1 = $p['produit']->getvendeur()->getId(); // on va rechercher les ID des vendeurs des articles au panier
+                    array_push($vendeurId , $data1);
+                    
+            }
+        }
+        $vendeurId = array_unique($vendeurId);
+    
+        $codeTape = $repCode->searchCodePromo($data,$vendeurId);
+   
+
+        if ( !$codeTape ){
+
+            dump('Vide');
+
+        }else{
+            foreach($codeTape as $c){
+               $montant = $c->getMontant();   
+               $session->set('codePromo', $montant);     
+        }
+        $prixTotal = $prixTotal-$montant;
+        dump($session->get('codePromo')) ;
+        
+        }
+    
+            };
+
+
+
+          
+            //   return $this->redirectToRoute('commande');
+           
+            
+        //***************************************
+    
+        
+
+     
+            return $this->render('commande/index.html.twig', [
+                'adresses' =>$adresses,
+                'panier' => $panier,
+                'prixTotal' => $prixTotal,
+                'adresseLivraison'=>$adresseLivraison,
+                'livreurs'=>$livreur, 
+                'livreurForm'=>$livreurForm->createView(), 
+                'codePromo'=>$codeForm->createView()
+               ]);
+            
+    
+          
     }
 
     /**
@@ -83,6 +149,7 @@ class CommandeController extends AbstractController
         $user = $this->getUser();
         $panier = $session->get('panier');
         $livreurId = $session->get('livreur');
+        $codePromo = $session->get('codePromo');
         $livreur = $repLivreur->find($livreurId);
     
  
@@ -97,6 +164,7 @@ class CommandeController extends AbstractController
         $commande
         ->setClient($user)
         ->setLivreur($livreur)
+        ->setCodePromo($codePromo)
         ->setReference(date('dmY').'-'.uniqid());
 
         foreach($panier as $id => $quantite){
@@ -117,7 +185,7 @@ class CommandeController extends AbstractController
             $prixTotal += $prix;
             
         }
-        $prixTotal += $prixLivraison;
+        $prixTotal += $prixLivraison-$codePromo;
 
        
 

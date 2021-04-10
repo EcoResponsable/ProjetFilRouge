@@ -51,6 +51,11 @@ class Commande
      */
     private $livreur;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $codePromo;
+
     
     public function __construct()
     {
@@ -149,6 +154,18 @@ class Commande
     public function setLivreur(?Livreur $livreur): self
     {
         $this->livreur = $livreur;
+
+        return $this;
+    }
+
+    public function getCodePromo(): ?int
+    {
+        return $this->codePromo;
+    }
+
+    public function setCodePromo(?int $codePromo): self
+    {
+        $this->codePromo = $codePromo;
 
         return $this;
     }

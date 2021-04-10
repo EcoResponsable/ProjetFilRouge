@@ -14,7 +14,7 @@ class AccueilController extends AbstractController
     /**
      * @Route("/", name="accueil")
      */
-    public function index(EntityManagerInterface $em, ProduitRepository $repProduit): Response
+    public function index( ProduitRepository $repProduit): Response
     {
         $produits = $repProduit->findBest();
         $vendeurs = [];

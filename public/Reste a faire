@@ -1,0 +1,12 @@
+Enlever l'ajout au panier quand on est un vendeur
+générer une facture en PDF 
+Si y'a le temps ajouter des promotions genre soldes
+
+EN COURS
+Ajout et validation de code promo 
+
+PROBLEME
+
+Je veux que le code entré soit verifié en fonction du code et du vendeur 
+
+il faut deja récuperer les vendeurs des articles du panier 

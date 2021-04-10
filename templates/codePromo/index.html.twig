@@ -1,37 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CodePromoController!{% endblock %}
+{% block title %}Hello CodePromoController!
+{% endblock %}
 
 {% block body %}
-<table class="table table-striped">
-    <tr>
-        <td>Nom</td>
-        <td>Montant</td>
-        <td>Date d'émission</td>
-        <td>Date de fin de validité</td>
-        <td>Statut</td>
-    </tr>
-{% for CodePromo in CodesPromo %}
-<tr>
-    <td>{{CodePromo.nom}} </td>
-    <td>{{CodePromo.montant}}</td>
-    <td>{{CodePromo.dateDebut|date("m/d/Y") }}</td>
-    <td>{{CodePromo.dateFin|date("m/d/Y") }}</td>
-    <td> 
-        {% if  CodePromo.dateFin <= dateActuelle %}
-       <div class="alert alert-danger" role="alert">
-           Expiré
-          </div>
-        {% else %}
-        <div class="alert alert-success" role="alert">
-            En cours
-           </div>
-        {% endif %}
-    </td>
-</tr>
-{% endfor %}
+	<table class="table table-striped">
+		<tr>
+			<td>Nom</td>
+			<td>Montant</td>
+			<td>Date d'émission</td>
+			<td>Date de fin de validité</td>
+			<td>Statut</td>
+			<td>Action</td>
+		</tr>
+		{% for CodePromo in CodesPromo %}
+			<tr>
+				<td>{{CodePromo.nom}}
+				</td>
+				<td>{{CodePromo.montant}}</td>
+				<td>{{CodePromo.dateDebut|date("m/d/Y") }}</td>
+				<td>{{CodePromo.dateFin|date("m/d/Y") }}</td>
+				<td>
+					{% if  CodePromo.dateFin <= dateActuelle %}
+						<div class="alert alert-danger" role="alert">
+							Expiré
+						</div>
+					{% else %}
+						<div class="alert alert-success" role="alert">
+							En cours
+						</div>
+					{% endif %}
+				</td>
+				<td>
+					<a href="{{path('deletCodePromo', { 'id':app.user.id,'idCode':CodePromo.id}) }}">
+						<i class=" px-2 fas fa-trash-alt text-danger"></i>
+					</a>
+				</td>
+			</tr>
+		{% endfor %}
 
-  </table>
-  <a  href="{{path('addCodePromo', {'id':app.user.id}) }}" class="btn btn-dark"> Ajouter un code </a>
+	</table>
+	<a href="{{path('addCodePromo', {'id':app.user.id}) }}" class="btn btn-dark">
+		Ajouter un code
+	</a>
 
 {% endblock %}

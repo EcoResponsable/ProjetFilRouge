@@ -169,6 +169,11 @@
 							{% endif %}
 						{% endfor %}
 					</li>
+					
+					
+			
+				
+					
 					<li class="list-group-item">
 						<h6>Total :
 							{{ prixTotal|number_format(2) }}€
@@ -181,7 +186,6 @@
 							'attr':{'disabled':true,
 							'class': 'btn btn-danger'}
 						} )}}
-				
 					{% else %}
 						{{form_row(livreurForm.submit,{
 							'attr':{'class': 'btn btn-success'}
@@ -189,6 +193,9 @@
 					{% endif %}		
 						{{form_end(livreurForm)}}
 				</div>
+					{{form(codePromo)}}
+					
+
 			</div>
 		</div>
 	</div>
