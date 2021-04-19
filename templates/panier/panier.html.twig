@@ -5,7 +5,7 @@
 {% block body %}
 
 <div class="container my-5">
-    <div class="col-8 mx-auto">
+    <div class="col-12 col-md-8 mx-auto">
       <h4 class="d-flex justify-content-between align-items-center mb-3">
         <span class="text-muted">Panier</span>
         <span class="badge bg-info rounded-pill">{{panier|length}}</span>
@@ -13,23 +13,33 @@
       <ul class="list-group mb-3">
 
         {% for p in panier %}
-        <li class="list-group-item d-flex justify-content-between lh-sm">
-        
-            <img class="img-fluid" src="{{asset(p.produit.image)}}" alt="..." height="90px" width="90px">
       
-          <div>
-            <h6 class="my-0">{{p.produit.nom}}</h6>
-            <small class="text-muted">{{((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT)|number_format(2)}}€/u</small>
-          </div>
-          <div>
-              <h6>
-                <a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'moins'})}}" class="text-info "><i class="fas fa-minus-circle"></i></a>
-                {{p.quantite}}
-                <a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info "><i class="fas fa-plus-circle"></i></a>
-            </h6>
-          </div>
-          <span class="text-muted">{{(((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT) * p.quantite)|number_format(2)}}€</span>
-          <a href="{{ path('panierDelete', {'id' : p.produit.id})}}" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+
+            <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-6 order-sm-1">
+                <a href="{{ path('panierDelete', {'id' : p.produit.id})}}" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+                <img class="img-fluid" src="{{asset(p.produit.image)}}" alt="..." height="90px" width="90px">
+                <h6 class="my-0">{{p.produit.nom}}</h6>
+                <small class="text-muted">{{((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT)|number_format(2)}}€/u</small>
+              </div>
+        
+
+              <div class="col-sm-5  order-sm-2">
+                  <h6>
+                    <a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'moins'})}}" class="text-info "><i class="fas fa-minus-circle"></i></a>
+                    {{p.quantite}}
+                    <a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info "><i class="fas fa-plus-circle"></i></a>
+                </h6>
+                </div>
+              <div class="col-sm-1 offset-12  order-sm-3">
+                <span class="text-muted">{{(((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT) * p.quantite)|number_format(2)}}€</span>
+                
+              </div>
+              </div>
+
+            </div>
         </li>
         {% endfor %}
 

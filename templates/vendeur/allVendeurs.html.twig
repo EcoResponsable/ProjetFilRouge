@@ -7,11 +7,10 @@
     <div class="container">
     <div class="row">
     
-
       {% for vendeur in vendeurs %} 
-        <div class=" col-md-4 mb-5">
+        <div class=" col-xl-4 col-lg-4 col-12 col-md-6 mb-5">
 
-          <div class="card" style="width: 19rem;">
+          <div class="card" >
               <div class="card-body">
                 <img src="{{ asset('images/' ~ vendeur.raisonSociale ~ '.jpg')}}" alt="vendeur" class="img-fluid">
                 <h5 class="card-title">{{vendeur.raisonSociale}}</h5>
