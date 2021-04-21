@@ -28,9 +28,11 @@
 
               <div class="col-sm-5  order-sm-2">
                   <h6>
-                    <a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'moins'})}}" class="text-info "><i class="fas fa-minus-circle"></i></a>
-                    {{p.quantite}}
-                    <a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info "><i class="fas fa-plus-circle"></i></a>
+                  
+                      <a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'moins'})}}" class="text-info js-like"><i class="fas fa-minus-circle"></i> <em class="js-like">{{p.quantite}}</em></a>
+                      <p class="js-like">{{p.quantite}}</p>
+                      <a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info js-like "><i class="fas fa-plus-circle"></i> <em class="js-like">{{p.quantite}}</em></a>
+                
                 </h6>
                 </div>
               <div class="col-sm-1 offset-12  order-sm-3">
@@ -48,9 +50,13 @@
           <strong>{{prixTotal|number_format(2)}}€</strong>
         </li>
       </ul>
-      <a href="{{path('allVendeurs')}}"><button type="button" class="btn btn-outline-primary">Retour aux vendeurs</button></a>
+      <a href="{{path('allVendeurs')}}"><button type="button" class="btn btn-outline-primary ">Retour aux vendeurs</button></a>
       <a href="{{path('commande')}}"><button type="button" class="btn btn-success" {{panier|length == 0 ? 'disabled'}}>Valider mon panier</button></a>
       <a href="{{path('panierDelete')}}"><button type="button" class="btn btn-outline-danger">Vider mon panier</button></a>
     </div>
 </div>
 {% endblock %}
+
+{% block javascripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock javascripts %}

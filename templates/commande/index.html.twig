@@ -124,11 +124,11 @@
 								<div class="col-md-6 col-sm-6 offset-md-3 offset-sm-3">
 									<div>
 										<h6>
-											<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'moins'})}}" class="text-info">
+											<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'moins'})}}" class="text-info js-like">
 												<i class="fas fa-minus-circle"></i>
 											</a>
-											{{p.quantite}}
-											<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info">
+											<span class="js-like">{{p.quantite}}</span>
+											<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info js-like">
 												<i class="fas fa-plus-circle"></i>
 											</a>
 										</h6>
@@ -212,3 +212,6 @@
 	</div>
 </li>
 {% endblock %}
+{% block javascripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock javascripts %}

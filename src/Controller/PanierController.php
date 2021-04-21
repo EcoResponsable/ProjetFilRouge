@@ -59,8 +59,16 @@ class PanierController extends AbstractController
         };
         
         $session->set('panier',$panier);
+ 
+        // if($action != 'plus'){
+        
+            return $this->json(['Qt'=>$panier[$id]],200);
 
-        return $this->redirect($request->headers->get('referer'));
+        // }else{
+
+        // return $this->redirect($request->headers->get('referer'));
+        // };
+       
 
     }
 
