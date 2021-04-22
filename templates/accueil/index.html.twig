@@ -59,7 +59,11 @@
               <li class="list-group-item">poid d'une portion : {{ produit.poidUnitaire}}</li>  
               <li class="list-group-item">prix de la portion TTC : {{ (produit.prixUnitaireHT + produit.prixUnitaireHT * produit.TVA)|number_format(2)}}</li>
               <li class="list-group-item">
-              <a href="{{ path('panierUpdate', {'id' : produit.id, 'action' : 'plus'})}}" class="btn btn-success" role="button"><i class="fas fa-1x fa-cart-plus"></i></a>   
+              <span class="add">
+                <a href="{{path('panierAjout',{id: produit.id}) }}" class="btn btn-success col-6 offset-3 add" role="button">
+                  <i class="fas fa-2x fa-cart-plus"></i>
+                </a><div class="validate"></div>
+                </span> 
               <a href="{{ path('produitsVendeur', {'id' : produit.vendeur.id})}}" class="btn btn-primary btn-sm">Voir le profil du vendeur</a>
               </li>
             </ul>
@@ -82,44 +86,8 @@
 
 <h1>Produits les plus populaires</h1>
 
-
-{# <div class="row">
-
-    {% for produit in produits %}
-
-
-        <div class="card" style="width: 19rem;">
-        <img class="card-img-top" src="{{asset(produit.image)}}" alt="...">
-            <div class="card-body">
-            <h5 class="card-title">{{produit.nom}}</h5>
-            
-            <p class="card-text">{{produit.description}}</p>
-            </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-            Stock : {{produit.stock}}
-            </li>
-            <li class="list-group-item">
-            poid d'une portion : {{ produit.poidUnitaire}}
-            </li>
-            <li class="list-group-item">
-            prix de la portion HT : {{ produit.prixUnitaireHT }}
-            </li>
-            <li class="list-group-item">
-            prix de la portion TTC : {{ (produit.prixUnitaireHT + produit.prixUnitaireHT * produit.TVA)|number_format(2)}}
-        </li>
-        <li class="list-group-item">
-            <a href="{{ path('panierUpdate', {'id' : produit.id, 'action' : 'plus'})}}" class="btn btn-success" role="button"><i class="fas fa-1x fa-cart-plus"></i></a>   
-            <a href="{{ path('produitsVendeur', {'id' : produit.vendeur.id})}}" class="btn btn-primary btn-sm">Voir le profil du vendeur</a>
-        </li>
-        
-    </ul>
-</div>
-{% endfor %}
-</div> #}
-
-
-
-
-
 {% endblock %}
+
+{% block javascripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock javascripts %}

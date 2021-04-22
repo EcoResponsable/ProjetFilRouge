@@ -92,7 +92,23 @@ class PanierController extends AbstractController
     }
 
   
+/**
+     * @Route("/panierAjout/{id}/", name="panierAjout")
+     */
+    public function panierAjout(SessionInterface $session, Request $request,$id): Response
+    {
 
+        $panier = $session->get('panier',[]);
+
+        
+        empty($panier[$id]) ? $panier[$id] = 1 : $panier[$id]++; 
+        $session->set('panier',$panier);
+ 
+        
+            return $this->json(['Qt'=>$panier[$id], "message"=>"dans votre panier"],200);
+
+
+    }
 
 
 }
