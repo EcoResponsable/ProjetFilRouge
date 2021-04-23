@@ -2,11 +2,10 @@
 const span = document.querySelectorAll("span.panierUpdate")
 
 const moins = []
- span.forEach(element=>moins.push(element.children.item(0).outerHTML +element.children.item(1).outerHTML))
- console.log(moins)
-const plus = []
+ span.forEach(element=>moins.push(element.children.item(0).outerHTML + element.children.item(1).outerHTML))
 
- span.forEach(element=>plus.push(element.children.item(0).outerHTML +element.children.item(1).outerHTML))
+const plus = []
+ span.forEach(element=>plus.push(element.children.item(2).outerHTML + element.children.item(1).outerHTML))
 
 
 document.querySelectorAll("a.js-like").forEach(function (link) {
@@ -20,17 +19,44 @@ function onClickBtn(event) {
  
   const url = this.href; // le this = au lien du a
 
-  
-  const spanCount = this.querySelector("em");  console.log(spanCount)
-  //on va chercher la span dans laquelle on affiche la quantité
+ 
+
+const aLink = this.outerHTML
+ 
+const tabMoins = [].concat(moins.filter(el => el.includes(aLink)))
+console.log(tabMoins)
+
+const tabPlus = [].concat(plus.filter(el => el.includes(aLink)))
+console.log(tabPlus)
+// console.log(plus.filter(el => el.includes(aLink)))
+
+
+if (tabMoins.length === 0){
+
+alert("Vous avez appuyé sur +")
+
+}else if(tabPlus.length === 0){
+
+  alert("Vous avez appuyé sur -")
+
+
+}
+
+
+
+
+  // // La on va devoir regarder si le aLink est present dans le tableau Moins ou +, et si oui extraire le p dans une variable pour en faire un text content 
+
+  // const spanCount = this.querySelector("em");  
+
 
   
-  axios.get(url).then(function (response) {
-    // axios se charge de renvoyer la reponse sur la page de la var url
-    // on va chercher la repose que axios renvoi
-    spanCount.textContent = response.data.Qt;
-    //on remplace le contenu de la span
-  });
+  // axios.get(url).then(function (response) {
+  //   // axios se charge de renvoyer la reponse sur la page de la var url
+  //   // on va chercher la repose que axios renvoi
+  //   spanCount.textContent = response.data.Qt;
+  //   //on remplace le contenu de la span
+  // });
 }
 
 
