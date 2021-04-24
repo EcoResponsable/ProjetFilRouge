@@ -3,7 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Produit;
+use App\Entity\Recherche;
+use App\Form\RechercheType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,6 +43,100 @@ class ProduitRepository extends ServiceEntityRepository
         ->getResult()
     ;
     }
+    
+    public function AllProducts()
+        {      
+            return $this->createQueryBuilder('produits');      
+        }
+
+
+    public function Recherche(Recherche $recherche, $vendeurId)
+    {
+        $query = $this->AllProducts();  
+        
+        $query = $query
+        ->where('produits.vendeur = :vendeurId')
+        ->setParameter('vendeurId', $vendeurId);
+  
+        
+        if ($recherche->getNom()){
+            $query = $query
+            ->andWhere('produits.nom = :nom')
+            ->setParameter('nom',$recherche->getNom());
+                           
+        }
+
+        if ($recherche->getPrixMin()){
+            $query = $query
+            ->andWhere('produits.prixUnitaireHT >= :prixMin')
+            ->setParameter('prixMin',$recherche->getPrixMin());          
+        }
+        if ($recherche->getPrixMax()){
+            $query = $query
+            ->andWhere('produits.prixUnitaireHT <= :prixMax')
+            ->setParameter('prixMax',$recherche->getPrixMax());          
+        }
+
+
+        if ($recherche->getStockMax()){
+            $query = $query
+            ->andWhere('produits.stock <= :stockMax')
+            ->setParameter('stockMax',$recherche->getStockMax());          
+        }
+        if ($recherche->getStockMin()){
+            $query = $query
+            ->andWhere('produits.stock >= :stockMin')
+            ->setParameter('stockMin',$recherche->getStockMin());          
+        }
+
+
+        return $query->getQuery()
+        ->getResult();
+
+
+        }
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+    //    dump($data);
+    //         return $this->createQueryBuilder('produits')
+    
+    //         ->andwhere('produits.vendeur = :vendeurId')
+    //         ->andWhere('produits.nom = :nom')
+    //         ->andWhere('produits.prixUnitaireHT >= :prixMin')
+    //         ->setParameters([
+    //             'vendeurId'=> $vendeurId,
+    //             'nom'=>$data->getNom(),
+    //             'prixMin'=>$data->getPrixMin(),
+                
+    //              ])
+    //         ->getQuery()
+    //         ->getResult()
+    //         ;
+    //Ca marche pour 1 mais pas pour plusieurs combinés
+
+        // if ($recherche->getNom()){
+        //     $query = $query
+        //     ->andwhere('produits.nom = :nom')
+        //     ->setParameter('nom', $recherche->getNom());
+        // }
+
+
+
+
+
+    
 
     // /**
     //  * @return Produit[] Returns an array of Produit objects

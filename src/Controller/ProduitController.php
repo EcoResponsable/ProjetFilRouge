@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
+use App\Entity\Recherche;
 use App\Form\ProduitFormType;
 use App\Form\ProduitUpdateFormType;
+use App\Form\RechercheType;
 use App\Repository\ProduitRepository;
 use App\Repository\VendeurRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,17 +37,38 @@ class ProduitController extends AbstractController
     /**
      * @Route("/produit/vendeur{id}", name="produitsVendeur")
      */
-    public function index(VendeurRepository $rep,$id,SessionInterface $session): Response
+    public function index(VendeurRepository $rep,$id,SessionInterface $session, Request $req, ProduitRepository $prodRep): Response
     {
-
+   
         $vendeur = $rep->find($id);
-        $produits = $vendeur->getProduits();
+        $produits = $vendeur->getProduits();    
+        $recherche = new Recherche();
+        
+        $form= $this->createForm(RechercheType::class,  $recherche);
+        $form->handleRequest($req);
+
+        if ($form->isSubmitted()) {
+
+            $vendeurId = $vendeur->getId();
+            $data = $form->getData();
+            dump($data);
+            
+            $produits = $prodRep->Recherche($data,$vendeurId);
+
+           // en gros je passe l'id du vendeur et le contenu du formulaire en parametres que j'envoi dans la requete
+        }
      
 
         return $this->render('produit/produitsVendeur.html.twig', [
             'produits' => $produits,
-            'vendeur'=>$vendeur
+            'vendeur'=>$vendeur,
+            'form'=>$form->createView()
         ]);
+        
+
+
+
+
     }
 
 
