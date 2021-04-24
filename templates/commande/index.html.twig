@@ -5,82 +5,90 @@
 
 {% block body %}
 	<div class="row">
-		<div class="col-9">
-			
+		<div class=" col-12 col-xl-9 ">
+		
 			<h1>Ma commande</h1>
 
-			<li class="list-group-item">
-				<h3>Vos adresses</h3>
+			<div class="col-12">
+				<li class="list-group-item">
+					<h3>Vos adresses</h3>
 
-				{% for adresse in adresses %}
+					{% for adresse in adresses %}
 
-					{% if adresse.isDefault == true %}
+						{% if adresse.isDefault == true %}
 
-						{% if adresseLivraison == adresse or adresseLivraison == null %}
-							<h6 style="color: darkgreen;">Adresse de livraison selectionnée:</h6>
-							<div class="alert alert-success" role="alert">
+							{% if adresseLivraison == adresse or adresseLivraison == null %}
+								<h6 style="color: darkgreen;">Adresse de livraison selectionnée:</h6>
+								<div class="alert alert-success" role="alert">
+									<p>
+										<b>{{adresse}}</b>	
+										<span class="row col-1">
+											<a href="{{path('adresseUpdate', {'id': adresse.id, 'route':1})}}" class="btn btn-outline-primary btn-sm">
+												<i class="far fa-edit"></i>
+											</a>
+										</span>
+									</p>
+								</div>
+
+							{% elseif adresseLivraison != adresse %}
+
 								<p>
-									<a href="{{path('adresseUpdate', {'id': adresse.id, 'route':1})}}" class="btn btn-outline-primary btn-sm">
-										<i class="far fa-edit"></i>
-									</a>
-									<b>{{adresse}}</b>
-								</p>
-							</div>
-
-						{% elseif adresseLivraison != adresse %}
-
-							<p>
-								<a href="{{path('adresseDelete', {'id': adresse.id, 'route':1})}}"  class="btn btn-outline-danger btn-sm">
-									<span>
-										<i class="fas fa-times"></i>
+								<span class="col-sm-12">{{adresse}}</span>
+									<span class="row col-1">
+											<a href="{{path('adresseDelete', {'id': adresse.id, 'route':1})}}"  class="btn btn-outline-danger btn-sm">
+												<span>
+													<i class="fas fa-times"></i>
+												</span>
+											</a>
+											<a href="{{path('adresseUpdate', {'id': adresse.id, 'route':1})}}" class="btn btn-outline-primary btn-sm">
+												<i class="far fa-edit"></i>
+											</a>
+										<a href="{{path('adresseLivraison', {'id': adresse.id})}}" class="btn btn-outline-success btn-sm">Utiliser cette adresse</a>
 									</span>
-								</a>
-								<a href="{{path('adresseUpdate', {'id': adresse.id, 'route':1})}}" class="btn btn-outline-primary btn-sm">
-									<i class="far fa-edit"></i>
-								</a>
-								{{adresse}}
-								<a href="{{path('adresseLivraison', {'id': adresse.id})}}" class="btn btn-outline-success btn-sm">Utiliser cette adresse					
-								</a>
-							</p>
+								</p>
 
-						{% endif %}
-
-					{% else %}
-
-						{% if adresseLivraison == adresse %}
-							<h6 style="color: darkgreen;">Adresse de livraison selectionnée:</h6>
-							<div class="alert alert-success" role="alert">
-								<span>
-									<a href="{{path('adresseUpdate', {'id': adresse.id, 'route':1})}}" class="btn btn-outline-primary btn-sm">
-										<i class="far fa-edit"></i>
-									</a>
-									<b>{{adresse}}</b>
-								</span>
-							</div>
+							{% endif %}
 
 						{% else %}
-							<p>
-								<a href="{{path('adresseDelete', {'id': adresse.id, 'route':1})}}" class="btn btn-outline-danger btn-sm">
+
+							{% if adresseLivraison == adresse %}
+								<h6 style="color: darkgreen;">Adresse de livraison selectionnée:</h6>
+								<div class="alert alert-success" role="alert">
+									<span>
+									<b>{{adresse}}</b>
+										<span class="row col-2">
+											<a href="{{path('adresseUpdate', {'id': adresse.id, 'route':1})}}" class="btn btn-outline-primary btn-sm">
+												<i class="far fa-edit"></i>
+											</a>
+										</span>
+									</span>
+								</div>
+
+							{% else %}
+								<p>
+									<span class="col-1">
+										<a href="{{path('adresseDelete', {'id': adresse.id, 'route':1})}}" class="btn btn-outline-danger btn-sm">
+												<i class="fas fa-times"></i>
+										<a href="{{path('adresseUpdate', {'id': adresse.id, 'route':1})}}" class="btn btn-outline-primary btn-sm">
+												<i class="far fa-edit"></i>
+											</a>
+										</a>
+									</span>
+									<span class="col-sm-12">{{adresse}}</span>
+									<a href="{{path('adresseLivraison', {'id': adresse.id})}}" class="btn btn-outline-success btn-sm">Utiliser cette adresse</a>
 									
-										<i class="fas fa-times"></i>
-								
-									<a href="{{path('adresseUpdate', {'id': adresse.id, 'route':1})}}" class="btn btn-outline-primary btn-sm">
-										<i class="far fa-edit"></i>
-									</a>
-								</a>
-								{{adresse}}
-								<a href="{{path('adresseLivraison', {'id': adresse.id})}}" class="btn btn-outline-success btn-sm">Utiliser cette adresse</a>
-							</p>
+								</p>
+							{% endif %}
+
 						{% endif %}
 
-					{% endif %}
+						{% endfor %}
 
-					{% endfor %}
-
-					<div class="offset-10 row">
-						<a href="{{path('adresseAdd', {'id':1})}}" class="btn btn-primary btn-sm ">Ajouter une nouvelle adresse</a>
-					</div>
-			</li>
+						<div class="offset-8 row">
+							<a href="{{path('adresseAdd', {'id':1})}}" class="btn btn-primary btn-sm ">Ajouter une nouvelle adresse</a>
+						</div>
+				</li>
+			</div>
 
 			<div class="row">
 				<div class="col-12">
@@ -96,7 +104,7 @@
 				</div>
 			</div>		
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12 col-xl-6">
 					<h3>Récapitulatif de la commande</h3>
 					<ul class="list-group mb-3">
 						<li class="list-group-item d-flex justify-content-between">
@@ -104,37 +112,36 @@
 							<strong>{{ prixTotal|number_format(2) }}€</strong>
 						</li>
 						{% for p in panier %}
+						
 							<li class="list-group-item d-flex justify-content-between lh-sm">
-
-								<img class="img-fluid" src="{{asset(p.produit.image)}}" alt="..." height="90px" width="90px">
-
+								<div class="col-md-5 col-sm-5 offset-md-1 offset-sm-1 ">
+									<img class="img-fluid" src="{{asset(p.produit.image)}}" alt="..." height="90px" width="90px">
+								</div>
 								<div>
 									<h6 class="my-0">{{p.produit.nom}}</h6>
 									<small class="text-muted">{{ ((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT)|number_format(2) }}€/u</small>
 								</div>
-								<div>
-									<h6>
-										<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'moins'})}}" class="text-info">
-											<i class="fas fa-minus-circle"></i>
-										</a>
-										{{p.quantite}}
-										<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info">
-											<i class="fas fa-plus-circle"></i>
-										</a>
-									</h6>
+								<div class="col-md-6 col-sm-6 offset-md-3 offset-sm-3">
+									<div>
+										<h6>
+								
+											<p class="js-like">{{p.quantite}}</p>
+											
+										</h6>
+									</div>
+									<span class="text-muted">
+										{{(((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT) * p.quantite)|number_format(2)}}€
+									</span>
+									<a href="{{ path('panierDelete', {'id' : p.produit.id})}}" class="text-danger">
+										<i class="fas fa-trash-alt"></i>
+									</a>
 								</div>
-								<span class="text-muted">
-									{{(((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT) * p.quantite)|number_format(2)}}€
-								</span>
-								<a href="{{ path('panierDelete', {'id' : p.produit.id})}}" class="text-danger">
-									<i class="fas fa-trash-alt"></i>
-								</a>
 							</li>
 						{% endfor %}
 					</ul>
 				</div>
 
-				<div class="col-5">
+				<div class="col-12 col-xl-5">
 					<h3>moyens de livraison</h3>								
 					<table>
 							<tr>
@@ -150,9 +157,9 @@
 
 
 
-		<div class="col-3">
+		<div class=" col-12 col-xl-3">
 
-			<div class="card sticky-top" style="width: 18rem;">
+			<div class="card sticky-top">
 				<div class="card-body">
 					<span class="card-text text-muted lh-0" style="font-size: 12px; text-align: justify;">
 						En passant votre commande, vous acceptez les Conditions générales de vente d’Amazon. Veuillez consulter notre Notice Protection de vos informations personnelles, notre Notice Cookies et notre Notice Annonces publicitaires basées sur vos centres d’intérêt.
@@ -201,3 +208,6 @@
 	</div>
 </li>
 {% endblock %}
+{% block javascripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock javascripts %}

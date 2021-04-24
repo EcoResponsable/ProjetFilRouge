@@ -1,46 +1,73 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panier{% endblock %}
+{% block title %}Panier
+{% endblock %}
 
 {% block body %}
 
-<div class="container my-5">
-    <div class="col-8 mx-auto">
-      <h4 class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-muted">Panier</span>
-        <span class="badge bg-info rounded-pill">{{panier|length}}</span>
-      </h4>
-      <ul class="list-group mb-3">
+	<div class="container my-5">
+		<div class="col-12 col-md-8 mx-auto">
+			<h4 class="d-flex justify-content-between align-items-center mb-3">
+				<span class="text-muted">Panier</span>
+				<span class="badge bg-info rounded-pill">{{panier|length}}</span>
+			</h4>
+			<ul class="list-group mb-3">
 
-        {% for p in panier %}
-        <li class="list-group-item d-flex justify-content-between lh-sm">
-        
-            <img class="img-fluid" src="{{asset(p.produit.image)}}" alt="..." height="90px" width="90px">
-      
-          <div>
-            <h6 class="my-0">{{p.produit.nom}}</h6>
-            <small class="text-muted">{{((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT)|number_format(2)}}€/u</small>
-          </div>
-          <div>
-              <h6>
-                <a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'moins'})}}" class="text-info "><i class="fas fa-minus-circle"></i></a>
-                {{p.quantite}}
-                <a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info "><i class="fas fa-plus-circle"></i></a>
-            </h6>
-          </div>
-          <span class="text-muted">{{(((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT) * p.quantite)|number_format(2)}}€</span>
-          <a href="{{ path('panierDelete', {'id' : p.produit.id})}}" class="text-danger"><i class="fas fa-trash-alt"></i></a>
-        </li>
-        {% endfor %}
+				{% for p in panier %}
 
-        <li class="list-group-item d-flex justify-content-between">
-          <span>Total :</span>
-          <strong>{{prixTotal|number_format(2)}}€</strong>
-        </li>
-      </ul>
-      <a href="{{path('allVendeurs')}}"><button type="button" class="btn btn-outline-primary">Retour aux vendeurs</button></a>
-      <a href="{{path('commande')}}"><button type="button" class="btn btn-success" {{panier|length == 0 ? 'disabled'}}>Valider mon panier</button></a>
-      <a href="{{path('panierDelete')}}"><button type="button" class="btn btn-outline-danger">Vider mon panier</button></a>
-    </div>
-</div>
+					<li class="list-group-item d-flex justify-content-between lh-sm">
+
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-sm-6 order-sm-1">
+									<a href="{{ path('panierDelete', {'id' : p.produit.id})}}" class="text-danger">
+										<i class="fas fa-trash-alt"></i>
+									</a>
+									<img class="img-fluid" src="{{asset(p.produit.image)}}" alt="..." height="90px" width="90px">
+									<h6 class="my-0">{{p.produit.nom}}</h6>
+									<small class="text-muted">{{((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT)|number_format(2)}}€/u</small>
+								</div>
+
+
+								<div class="col-sm-5  order-sm-2">
+								
+										<span class="panierUpdate">
+											<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'moins'})}}" class="text-info js-like">
+												<i class="fas fa-minus-circle"></i>
+											</a>
+											<p class="js-like">{{p.quantite}}</p>
+											<a href="{{ path('panierUpdate', {'id' : p.produit.id, 'action' : 'plus'})}}" class="text-info js-like">
+												<i class="fas fa-plus-circle"></i>
+											</a>
+												<em class="text-muted">{{(((p.produit.prixUnitaireHT * p.produit.TVA) + p.produit.prixUnitaireHT) * p.quantite)|number_format(2)}}€</em>
+										</span>
+										
+								
+								</div>
+							</div>
+
+						</div>
+					</li>
+				{% endfor %}
+
+				<li class="list-group-item d-flex justify-content-between">
+					<span>Total :</span>
+					<strong>{{prixTotal|number_format(2)}}€</strong>
+				</li>
+			</ul>
+			<a href="{{path('allVendeurs')}}">
+				<button type="button" class="btn btn-outline-primary ">Retour aux vendeurs</button>
+			</a>
+			<a href="{{path('commande')}}">
+				<button type="button" class="btn btn-success" {{panier|length == 0 ? 'disabled'}}>Valider mon panier</button>
+			</a>
+			<a href="{{path('panierDelete')}}">
+				<button type="button" class="btn btn-outline-danger">Vider mon panier</button>
+			</a>
+		</div>
+	</div>
 {% endblock %}
+
+{% block javascripts %}
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock javascripts %}

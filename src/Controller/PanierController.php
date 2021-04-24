@@ -59,8 +59,16 @@ class PanierController extends AbstractController
         };
         
         $session->set('panier',$panier);
+ 
+        // if($action != 'plus'){
+        
+            return $this->json(['Qt'=>$panier[$id]],200);
 
-        return $this->redirect($request->headers->get('referer'));
+        // }else{
+
+        // return $this->redirect($request->headers->get('referer'));
+        // };
+       
 
     }
 
@@ -84,7 +92,23 @@ class PanierController extends AbstractController
     }
 
   
+/**
+     * @Route("/panierAjout/{id}/", name="panierAjout")
+     */
+    public function panierAjout(SessionInterface $session, Request $request,$id): Response
+    {
 
+        $panier = $session->get('panier',[]);
+
+        
+        empty($panier[$id]) ? $panier[$id] = 1 : $panier[$id]++; 
+        $session->set('panier',$panier);
+ 
+        
+            return $this->json(['Qt'=>$panier[$id], "message"=>"dans votre panier"],200);
+
+
+    }
 
 
 }
