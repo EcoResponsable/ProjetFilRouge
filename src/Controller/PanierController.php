@@ -41,34 +41,62 @@ class PanierController extends AbstractController
     }
 
     /**
-     * @Route("/panierUpdate/{id}/{action?}", name="panierUpdate")
+     * @Route("/panierUpdate/{id}/{action?}/", name="panierUpdate")
      */
-    public function panierUpdate(SessionInterface $session, Request $request,$id,$action): Response
+    public function panierUpdate(SessionInterface $session, Request $request,$id,$action, ProduitRepository $rep): Response
     {
+   
+        $produit = $rep->find($id);
+        $prixHT = $produit->getPrixUnitaireHT();
+        $TVA = $produit->getTVA();
+        $quantiteProduit = $session->get('panier', []);
 
-        $panier = $session->get('panier',[]);
 
-        if($action == 'moins'){            
-            if($panier[$id] == 1){
-                unset($panier[$id]);
+        if($action == 'moins'){   
+
+            if($quantiteProduit[$id] == 1){
+                unset($quantiteProduit[$id]);
             }else{
-                $panier[$id]--;
+                $quantiteProduit[$id]--;
+                $prix = (($prixHT*$TVA)+$prixHT)*$quantiteProduit[$id];
+                $prix = number_format($prix, 2);
+             
             }
         }else{
-            empty($panier[$id]) ? $panier[$id] = 1 : $panier[$id]++;
+            empty($quantiteProduit[$id]) ? $quantiteProduit[$id] = 1 : $quantiteProduit[$id]++;
+            $prix = (($prixHT*$TVA)+$prixHT)*$quantiteProduit[$id];
+            $prix = number_format($prix, 2); 
         };
-        
-        $session->set('panier',$panier);
- 
-        // if($action != 'plus'){
-        
-            return $this->json(['Qt'=>$panier[$id]],200);
 
-        // }else{
+        $session->set('panier',$quantiteProduit);
 
-        // return $this->redirect($request->headers->get('referer'));
-        // };
-       
+
+
+
+        // ***********************PRIX TOTAL********************************
+
+        
+        $prixTotal = 0;
+        $produits = $session->get('panier', []);
+        $panier = [];
+
+        foreach($produits as $id => $quantite){
+            $panier[] = [
+                'produit' => $rep->find($id),
+                'quantite' => $quantite
+            ];
+        }
+
+        foreach($panier as $p){
+            $prixTotal += ($p['produit']->getPrixUnitaireHT() + ($p['produit']->getPrixUnitaireHT() * $p['produit']->getTVA())) * $p['quantite'];
+        }
+        $prixTotal = number_format($prixTotal, 2); 
+
+        
+
+
+        return $this->json(['Qt'=>$quantiteProduit[$id], 'prix'=>$prix, 'prixTotal' => $prixTotal],200);
+
 
     }
 
@@ -103,6 +131,7 @@ class PanierController extends AbstractController
         
         empty($panier[$id]) ? $panier[$id] = 1 : $panier[$id]++; 
         $session->set('panier',$panier);
+       
  
         
             return $this->json(['Qt'=>$panier[$id], "message"=>"dans votre panier"],200);
