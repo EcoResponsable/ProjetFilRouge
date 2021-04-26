@@ -56,7 +56,7 @@ axios.get(url).then(function (response) { // axios se charge de renvoyer la repo
     const spanCount = this.previousElementSibling;
     const prix = this.nextElementSibling
 
-     axios.get(url).then(function (response) { // axios se charge de renvoyer la reponse sur la page de la var url
+    axios.get(url).then(function (response) { // axios se charge de renvoyer la reponse sur la page de la var url
     
     spanCount.textContent = response.data.Qt;
     prix.textContent = response.data.prix;
@@ -69,26 +69,6 @@ axios.get(url).then(function (response) { // axios se charge de renvoyer la repo
 }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 document.querySelectorAll("span.add").forEach(function (link) {
   //On selectionne les liens a avec la classe js-likes
@@ -113,4 +93,28 @@ function onClickBtnAdd(event) {
     spanCount.textContent = response.data.Qt+" "+response.data.message;
     //on remplace le contenu de la span
   });
+}
+
+
+const divLivreur = document.getElementsByClassName('livreur')
+
+// const livreurTarif = 
+function ch(){
+
+if(document.querySelector('input#livreurform_nom_1').checked ==true){
+  
+console.log(document.querySelector('input#livreurform_nom_1'))
+divLivreur.item(0).textContent = "5€"
+
+}
+else if (document.getElementById('livreurform_nom_2').checked ==true){
+ 
+divLivreur.item(0).textContent = "7€"
+
+}else if (document.getElementById('livreurform_nom_3').checked ==true){
+
+  divLivreur.item(0).textContent = "8€"
+
+
+}
 }

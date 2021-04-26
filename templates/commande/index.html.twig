@@ -147,7 +147,11 @@
 							<tr>
 								<td>
 									{{form_start(livreurForm)}}
-									{{form_row(livreurForm.nom)}}
+
+									{{form_row(livreurForm.nom, {'attr':{
+										'onChange':'ch()'
+									}}
+									)}}
 								</td>
 							</tr>		
 					</table>
@@ -172,18 +176,16 @@
 					<li class="list-group-item">Livraison :
 						{% for livreur in livreurs %}
 							{% if livreur %}
-								{{livreur.tarif}}
+								<div class="livreur"></div>
+								
 							{% endif %}
 						{% endfor %}
 					</li>
 					
-					
-			
-				
-					
+						
 					<li class="list-group-item">
 						<h6>Total :
-							{{ prixTotal|number_format(2) }}€
+							{{ prixTotal|number_format(2)}}€
 						</h6>
 					</li>
 				</ul>

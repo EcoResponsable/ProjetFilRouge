@@ -18,6 +18,7 @@ class LivreurformType extends AbstractType
             'class' => Livreur::class,    
             'multiple'=>false,
             'expanded'=>true
+            
                 
         ])  
         ->add('submit', SubmitType::class, ['label'=>'Valider la commande']);
