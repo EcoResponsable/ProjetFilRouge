@@ -92,9 +92,6 @@ class PanierController extends AbstractController
         }
         $prixTotal = number_format($prixTotal, 2); 
 
-        
-
-
         return $this->json(['Qt'=>$quantiteProduit[$id], 'prix'=>$prix, 'prixTotal' => $prixTotal],200);
 
 

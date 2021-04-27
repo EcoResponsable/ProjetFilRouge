@@ -35,7 +35,7 @@ class CommandeController extends AbstractController
         $adresses = $user->getAdresses();
         $livreur = $repLivreur->findAll();
         $codePromo = $repCode->findAll();
-        
+        $montant = 0;
         
 
         
@@ -109,30 +109,18 @@ class CommandeController extends AbstractController
                $montant = $c->getMontant();   
                $session->set('codePromo', $montant);     
         }
-        $prixTotal = $prixTotal-$montant;
-        dump($session->get('codePromo')) ;
         
         }
     
             };
-
-
-
-          
-            //   return $this->redirectToRoute('commande');
-           
-            
-        //***************************************
     
-        
-
-     
             return $this->render('commande/index.html.twig', [
                 'adresses' =>$adresses,
                 'panier' => $panier,
                 'prixTotal' => $prixTotal,
                 'adresseLivraison'=>$adresseLivraison,
-                'livreurs'=>$livreur, 
+                'livreurs'=>$livreur,
+                'codePromoMontant'=>$montant,
                 'livreurForm'=>$livreurForm->createView(), 
                 'codePromo'=>$codeForm->createView()
                ]);
@@ -146,6 +134,7 @@ class CommandeController extends AbstractController
      */
     public function commandeValidate(SessionInterface $session, ProduitRepository $rep, EntityManagerInterface $em, LivreurRepository $repLivreur)
     {
+        
         $user = $this->getUser();
         $panier = $session->get('panier');
         $livreurId = $session->get('livreur');
@@ -182,10 +171,12 @@ class CommandeController extends AbstractController
             $em->persist($prod);
 
             $prix = ($prod->getPrixUnitaireHT() + ($prod->getPrixUnitaireHT() * $prod->getTVA()));
-            $prixTotal += $prix;
+            $prixTotal += $prix*$quantite;
             
         }
+        
         $prixTotal += $prixLivraison-$codePromo;
+        
 
        
 

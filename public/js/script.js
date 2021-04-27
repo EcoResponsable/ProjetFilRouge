@@ -1,4 +1,7 @@
 
+//*****************************************PANIER************************************************* */
+
+
 const span = document.querySelectorAll("span.panierUpdate") //on prend la span qui regroupe le tout
 const pTotal = document.querySelectorAll("strong.prixTotal") 
 
@@ -25,7 +28,7 @@ const aLink = this.outerHTML
 const tabMoins = [].concat(moins.filter(el => el.includes(aLink)))
 
 const tabPlus = [].concat(plus.filter(el => el.includes(aLink)))
-const prixTotal = (pTotal.item(0))
+var prixTotal = (pTotal.item(0))
 
 
 
@@ -64,8 +67,6 @@ axios.get(url).then(function (response) { // axios se charge de renvoyer la repo
    
     // on remplace le contenu de la span
   });
-
-
 }
 
 }
@@ -94,27 +95,65 @@ function onClickBtnAdd(event) {
     //on remplace le contenu de la span
   });
 }
+//*****************************************PANIER************************************************* */
 
+
+
+
+
+//*****************************************CHOIX LIVREUR************************************************* */
 
 const divLivreur = document.getElementsByClassName('livreur')
+const prixLivreur = document.querySelector("span.test") ; 
 
-// const livreurTarif = 
+//On recupere le prix Total 
+var divPrixTotal = document.getElementById('prixTotal')
+var prixTotal = parseFloat(divPrixTotal.textContent)
+var prixLivraison = 0
+var montantCodePromo = 0
+
+
+// si il n'y a rien dans la div livreur on remplace par un message d'erreur
+if (divLivreur.item(0).innerHTML = " "){
+    divLivreur.item(0).textContent = "Pas de livreur séléctionné"
+    document.querySelector("span.test").style.display = "none";
+}
+
+
+//Fonction de changement au click 
 function ch(){
 
-if(document.querySelector('input#livreurform_nom_1').checked ==true){
-  
-console.log(document.querySelector('input#livreurform_nom_1'))
-divLivreur.item(0).textContent = "5€"
+if(document.getElementById('livreurform_nom_1').checked ==true){ 
+ divLivreur.item(0).textContent = prixLivreur.children.item(0).textContent + "€" //On modifie le contenue de la div du prix de livrason
+  prixLivraison = parseFloat(prixLivreur.children.item(0).textContent)
+ divPrixTotal.textContent = (prixTotal+ prixLivraison)-montantCodePromo +" €"
+
 
 }
 else if (document.getElementById('livreurform_nom_2').checked ==true){
+  divLivreur.item(0).textContent = prixLivreur.children.item(1).textContent + "€"//On modifie le contenue de la div du prix de livrason
+  prixLivraison = parseFloat(prixLivreur.children.item(1).textContent)
+  divPrixTotal.textContent = (prixTotal+ prixLivraison)-montantCodePromo+" €"
  
-divLivreur.item(0).textContent = "7€"
-
 }else if (document.getElementById('livreurform_nom_3').checked ==true){
+  divLivreur.item(0).textContent = prixLivreur.children.item(2).textContent + "€"//On modifie le contenue de la div du prix de livrason
+  prixLivraison = parseFloat(prixLivreur.children.item(2).textContent)
+  divPrixTotal.textContent = (prixTotal+ prixLivraison)-montantCodePromo+" €"
 
-  divLivreur.item(0).textContent = "8€"
-
-
+} 
 }
-}
+
+//*****************************************CHOIX LIVREUR************************************************* */
+
+//*****************************************CODE PROMO************************************************* */
+
+
+function codePromo(){
+  
+  montantCodePromo = parseFloat(document.getElementById('codePromo').innerHTML)
+  divPrixTotal.textContent = (prixTotal + prixLivraison)-montantCodePromo +"€"
+  event.preventDefault();
+
+      }
+
+//*****************************************CODE PROMO************************************************* */

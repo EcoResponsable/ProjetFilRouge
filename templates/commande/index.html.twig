@@ -124,9 +124,7 @@
 								<div class="col-md-6 col-sm-6 offset-md-3 offset-sm-3">
 									<div>
 										<h6>
-								
-											<p class="js-like">{{p.quantite}}</p>
-											
+											<p class="js-like">{{p.quantite}}</p>	
 										</h6>
 									</div>
 									<span class="text-muted">
@@ -174,18 +172,28 @@
 						{{ prixTotal|number_format(2) }}€
 					</li>
 					<li class="list-group-item">Livraison :
+					<div class="livreur"> </div>
+					<span class="test">
 						{% for livreur in livreurs %}
 							{% if livreur %}
-								<div class="livreur"></div>
-								
+								<div class="livreurs">{{livreur.tarif}}</div>
 							{% endif %}
 						{% endfor %}
+						</span>
 					</li>
-					
-						
+
+				{% if codePromoMontant <= 0 %}	
+					{% else %}
 					<li class="list-group-item">
-						<h6>Total :
-							{{ prixTotal|number_format(2)}}€
+						Code promotion:<h6 id="codePromo">
+							{{codePromoMontant}} 
+						</h6>€
+					</li>
+				{% endif %}
+
+					<li class="list-group-item">
+						Total :<h6 id="prixTotal">
+							{{ prixTotal|number_format(2)}} €
 						</h6>
 					</li>
 				</ul>
@@ -202,7 +210,15 @@
 					{% endif %}		
 						{{form_end(livreurForm)}}
 				</div>
-					{{form(codePromo)}}
+					{{form_start(codePromo)}}
+
+					{{form_row(codePromo.nom)}}
+					{{form_row(codePromo.Ajouter, {'attr':{
+										'onClick':'codePromo()'
+									}}
+									)}}
+
+					{{form_end(codePromo)}}
 					
 
 			</div>
