@@ -147,7 +147,7 @@
 									{{form_start(livreurForm)}}
 
 									{{form_row(livreurForm.nom, {'attr':{
-										'onChange':'ch()'
+										'onChange':'ch();codePromo()'
 									}}
 									)}}
 								</td>
@@ -184,17 +184,22 @@
 
 				{% if codePromoMontant <= 0 %}	
 					{% else %}
-					<li class="list-group-item">
-						Code promotion:<h6 id="codePromo">
-							{{codePromoMontant}} 
-						</h6>€
-					</li>
+			
+						<span class="alert alert-success alert-dismissible fade show">
+							Code promotion: -
+							<span id="codePromo">
+								{{codePromoMontant}} 
+							</span>€
+						</span>
+			
 				{% endif %}
 
 					<li class="list-group-item">
-						Total :<h6 id="prixTotal">
-							{{ prixTotal|number_format(2)}} €
-						</h6>
+					<strong>	
+						Total :<span id="prixTotal">
+						{{ prixTotal|number_format(2)}} €
+						</span>
+					</strong>
 					</li>
 				</ul>
 				<div class="card-body">	

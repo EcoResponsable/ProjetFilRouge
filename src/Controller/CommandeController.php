@@ -141,7 +141,7 @@ class CommandeController extends AbstractController
         $codePromo = $session->get('codePromo');
         $livreur = $repLivreur->find($livreurId);
     
- 
+
         $prixTotal = 0;
 
 

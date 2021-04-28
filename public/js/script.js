@@ -107,7 +107,7 @@ const divLivreur = document.getElementsByClassName('livreur')
 const prixLivreur = document.querySelector("span.test") ; 
 
 //On recupere le prix Total 
-var divPrixTotal = document.getElementById('prixTotal')
+const divPrixTotal = document.getElementById('prixTotal')
 var prixTotal = parseFloat(divPrixTotal.textContent)
 var prixLivraison = 0
 var montantCodePromo = 0
@@ -126,7 +126,9 @@ function ch(){
 if(document.getElementById('livreurform_nom_1').checked ==true){ 
  divLivreur.item(0).textContent = prixLivreur.children.item(0).textContent + "€" //On modifie le contenue de la div du prix de livrason
   prixLivraison = parseFloat(prixLivreur.children.item(0).textContent)
+
  divPrixTotal.textContent = (prixTotal+ prixLivraison)-montantCodePromo +" €"
+
 
 
 }
@@ -155,5 +157,6 @@ function codePromo(){
   event.preventDefault();
 
       }
+
 
 //*****************************************CODE PROMO************************************************* */
