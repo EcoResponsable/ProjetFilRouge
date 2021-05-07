@@ -46,7 +46,7 @@ class AppFixtures extends Fixture
             ->setRaisonSociale($value)
             ->setSiret(mt_rand(111111,999999))
             ->setTelephone(mt_rand(1111111111,9999999999))
-            ->setDescription('Description du '.$value)
+            ->setDescription('Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cum quidem quo enim minima soluta necessitatibus quis iusto beatae, culpa assumenda rerum, suscipit laborum impedit error obcaecati alias ex? Saepe, molestias!')
             ->addAdress($adresse)
             ->setEmail($value.'@gmail.com')
             ->setPassword($password)

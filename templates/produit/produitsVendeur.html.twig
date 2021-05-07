@@ -86,13 +86,14 @@ Liste des produits du {{vendeur.nom}}
               </li>
               <li class="list-group-item">
 
-
                 <span class="add">
-                <a href="{{path('panierAjout',{id: produit.id}) }}" class="btn btn-success col-6 offset-3 add" role="button">
-                  <i class="fas fa-2x fa-cart-plus"></i>
-                </a><div class="validate"></div>
+                <a class="dedcription-btn" href="{{path('panierAjout',{id: produit.id}) }}">
+                  <span class="name-descripeion"> Ajouter au panier </span> 
+                  <div class="btn-icon">
+                   <i class="fas fa-lg fa-cart-plus "></i></div>
+                  </a>
+                  <div class="validate"></div>
                 </span>
-
 
 
               </li>

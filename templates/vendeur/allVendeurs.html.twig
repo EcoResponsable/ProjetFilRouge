@@ -1,30 +1,114 @@
-      {% extends 'base.html.twig' %}
+{% extends 'baseSansNavBarre.html.twig' %}
 
-        {% block title %}Hello Vendeur{% endblock %}
+{% block title %}Hello Vendeur
+{% endblock %}
 
-      {% block body %}
-      <br>  <h3> Liste des producteurs:</h3>
-    <div class="container">
-    <div class="row">
-    
-      {% for vendeur in vendeurs %} 
-        <div class=" col-xl-4 col-lg-4 col-12 col-md-6 mb-5">
+{% block body %}
+	<div class="container-fluid fond">
+		<nav class="navbar navbar-expand-lg navVendeurs">
+			<div class="container-fluid">
+		
+			  <a class="navbar-brand" href="{{ path('accueil')}}">Home</a>
+			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		
+				<ul class="navbar-nav me-auto">
+				  <li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="{{path('allVendeurs')}}">Liste des producteurs</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="#">Info/FAQ</a>
+				  </li>
+				</ul>
+				  
+		  
+		
+				<ul class="navbar-nav ms-auto">
+		
+				{% if app.user %}
+				  {% if app.user.roles == ['ROLE_VENDEUR'] %}
+				  <li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="{{path('produitsUpdate', {'id':app.user.id}) }}"><i class="fas fa-2x fa-store"></i></a>
+				  </li>
+				  {% elseif app.user.roles == ['ROLE_CLIENT'] %}
+				  <li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="{{path('panier')}}"><i class="fas fa-2x fa-shopping-cart"></i></a>
+				  </li>
+				  {% endif %}
+				{% else %}
+				  <li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="{{path('panier')}}"><i class="fas fa-2x fa-shopping-cart"></i></a>
+				  </li>
+				{% endif %}
+				  
+		
+				{% if app.user %}
+				  <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					  Mon compte
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+		
+					  {% if app.user.roles[0] == 'ROLE_CLIENT' %}
+						
+						<li><a class="dropdown-item" href="{{ path('infoClient') }}">Mon compte</a></li>
+		
+						{% elseif app.user.roles[0] == 'ROLE_VENDEUR' %}
+						  
+						<li><a class="dropdown-item" href="{{ path('infoVendeur') }}">Mon compte</a></li>
+		
+						{% endif %}
+		
+					  <li><a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a></li>
+					</ul>            
+				  {% else %}
+				  <li class="nav-item">
+					<a class="nav-link" aria-current="page" href="{{ path('app_login')}}">Connexion</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" aria-current="page"  href="{{path('register')}}">S'inscrire</a>
+				  </li>        
+				  {% endif %}
+				</ul>
+			  </div>
+			</div>
+		  </nav>
+		<h3 class="col-6 offset-3"id="titreListe">Nos producteurs</h3>
+	</div>
+	<div class="container-fluid carte ">
+		<div class="row">
 
-          <div class="card" >
-              <div class="card-body">
-                <img src="{{ asset('images/' ~ vendeur.raisonSociale ~ '.jpg')}}" alt="vendeur" class="img-fluid">
-                <h5 class="card-title">{{vendeur.raisonSociale}}</h5>
-                <p class="card-text">{{vendeur.description}}</p>
-                <a href="{{ path('produitsVendeur', {'id' : vendeur.id})}}" class="btn btn-primary">Voir les articles en vente</a>
-              </div>
-            <!-- <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-              </li>
-            </ul> -->
-          </div>
-        </div>
-            
-      {% endfor %}
-     </div>
-    </div>
-    {% endblock %}
+			{% for vendeur in vendeurs %}
+				<div class=" col-xl-4 col-lg-4 col-12 col-md-6 mb-5">
+	<img src="{{ asset('images/' ~ vendeur.raisonSociale ~ '.jpg')}}" alt="vendeur" class="card-img-top imgVendeur">
+					<div class="card cartesVendeurs">
+					
+						<div class="card-body">
+							
+							<h5 class="card-title">{{vendeur.raisonSociale}}</h5>
+							<p class="card-text">{{vendeur.description}}</p>
+							<a class="dedcription-btn" href="{{ path('produitsVendeur', {'id' : vendeur.id})}}">
+							<span class="name-descripeion">Voir les articles</span>
+						  <div class="btn-icon">
+							<i class="fas fa-carrot fa-lg"></i></div>
+						  </a>
+						</div>
+
+
+
+					
+						<!-- <ul class="list-group list-group-flush">
+													              <li class="list-group-item">
+													              </li>
+													            </ul> -->
+					</div>
+				</div>
+				
+
+			{% endfor %}
+		</div>
+	</div>
+
+{% endblock %}
