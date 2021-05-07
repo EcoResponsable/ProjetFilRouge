@@ -57,12 +57,18 @@ class ProduitController extends AbstractController
 
            // en gros je passe l'id du vendeur et le contenu du formulaire en parametres que j'envoi dans la requete
         }
+        
+        $bg = array('fond1.jpg', 'fond2.jpg', 'fond3.jpg', 'fond4.jpg', 'fond5.jpg', 'fond6.jpg', 'fond7.jpg' ); // array of filenames
+
+        $i = rand(0, count($bg)-1); // generate random number size of the array
+        $selectedBg = "$bg[$i]"; // set variable equal to which random filename was chosen
      
 
         return $this->render('produit/produitsVendeur.html.twig', [
             'produits' => $produits,
             'vendeur'=>$vendeur,
-            'form'=>$form->createView()
+            'form'=>$form->createView(),
+            'background'=>$selectedBg
         ]);
         
 

@@ -1,13 +1,90 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseSansNavBarre.html.twig' %}
 
 {% block body %}
+{# *********************************************************************NAV #}
+<div class="container-fluid fond">
+  <nav class="navbar navbar-expand-lg navVendeurs">
+    <div class="container-fluid">
+  
+      <a class="navbar-brand" href="{{ path('accueil')}}">Home</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{path('allVendeurs')}}">Liste des producteurs</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Info/FAQ</a>
+        </li>
+      </ul>
+        
+    
+  
+      <ul class="navbar-nav ms-auto">
+  
+      {% if app.user %}
+        {% if app.user.roles == ['ROLE_VENDEUR'] %}
+        <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{path('produitsUpdate', {'id':app.user.id}) }}"><i class="fas fa-2x fa-store"></i></a>
+        </li>
+        {% elseif app.user.roles == ['ROLE_CLIENT'] %}
+        <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{path('panier')}}"><i class="fas fa-2x fa-shopping-cart"></i></a>
+        </li>
+        {% endif %}
+      {% else %}
+        <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{path('panier')}}"><i class="fas fa-2x fa-shopping-cart"></i></a>
+        </li>
+      {% endif %}
+        
+  
+      {% if app.user %}
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Mon compte
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+  
+          {% if app.user.roles[0] == 'ROLE_CLIENT' %}
+          
+          <li><a class="dropdown-item" href="{{ path('infoClient') }}">Mon compte</a></li>
+  
+          {% elseif app.user.roles[0] == 'ROLE_VENDEUR' %}
+            
+          <li><a class="dropdown-item" href="{{ path('infoVendeur') }}">Mon compte</a></li>
+  
+          {% endif %}
+  
+          <li><a class="dropdown-item" href="{{ path('app_logout')}}">Déconnexion</a></li>
+        </ul>            
+        {% else %}
+        <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="{{ path('app_login')}}">Connexion</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" aria-current="page"  href="{{path('register')}}">S'inscrire</a>
+        </li>        
+        {% endif %}
+      </ul>
+      </div>
+    </div>
+    </nav>
+
+
+{# *********************************************************************NAV #}
   <br />
-  <div class="container-fluid">
-    <div class="card">
-      <div class="row col-12">
+  <div class="container offset-lg-4 col-lg-4 col-9 containerVendeur">
+   <img src="{{ asset('images/' ~ vendeur.raisonSociale ~ '.jpg') }}" class="card-img-top imagevendeur"/>
+    <div class="card carteduvendeur"   >  
+       
+      <div class="row ">
       
-            <div class="col-12 col-sm-12 col-lg-4 offset-xl-0 offset-lg-0 align-items-center">
-              <img src="{{ asset('images/' ~ vendeur.raisonSociale ~ '.jpg') }}"
+            {# <div class="col-12 col-sm-12 col-lg-4 offset-xl-0 offset-lg-0 align-items-center">
+              
                 alt="vendeur"
                 class="img-fluid" />
             </div>
@@ -15,10 +92,15 @@
         
           <div class="col-12 col-sm-12 col-lg-8 offset-xl-0">
             <div class="card-body">
-              <h5 class="card-title">
+            
+             
+            </div> #}
+         
+              <div class="card-body"> 
+                 <h5 class="card-title">
                 Vendeur {{ vendeur.raisonSociale }}
               </h5>
-              <p class="card-text">
+                 <p class="card-text">
                 Géré par: {{ vendeur.nom }} {{ vendeur.prenom }}
               </p>
               <p class="card-text">
@@ -32,6 +114,9 @@
                   {% endfor %}
                 </small>
               </p>
+                
+              
+              </div>
             </div>
           </div>
         </div>
@@ -39,12 +124,14 @@
     </div>
   </div>
 </div>
+</div>
 <br>
 <div class="container-fluid">
   <div class="row">
-    <div class=" col-md-2">
-Liste des produits du {{vendeur.nom}}
+    <div class="col-md-2 filtre-produit">
+Filtrer les produits 
 {{form_start(form)}}
+{{form_rest(form)}}
 <button class="btn btn-primary">Filtrer</button>
 {{form_end(form)}}
 
@@ -88,7 +175,7 @@ Liste des produits du {{vendeur.nom}}
 
                 <span class="add">
                 <a class="dedcription-btn" href="{{path('panierAjout',{id: produit.id}) }}">
-                  <span class="name-descripeion"> Ajouter au panier </span> 
+                  <span class="name-descripeion"> Ajouter </span> 
                   <div class="btn-icon">
                    <i class="fas fa-lg fa-cart-plus "></i></div>
                   </a>
@@ -103,6 +190,17 @@ Liste des produits du {{vendeur.nom}}
       {% endfor %}
     </div>
   </div>
+
+<style type="text/css">
+
+.fond{
+background: linear-gradient(to bottom, rgba(255, 255, 255, 0.205), rgba(255, 255, 255, 0.205)), url(../images/{{background}} )no-repeat  ;
+background-size: cover;
+}
+
+</style>
+
+
 {% endblock %}
 
 
